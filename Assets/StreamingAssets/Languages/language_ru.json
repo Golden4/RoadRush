@@ -1,0 +1,168 @@
+{
+  "items": [
+    {
+      "key": "play_btn",
+      "value": "Играть"
+    },
+    {
+      "key": "settings_btn",
+      "value": "Настройки"
+    },
+    {
+      "key": "max_speed",
+      "value": "Макс. скорость"
+    },
+    {
+      "key": "acceleration",
+      "value": "Ускорение"
+    },
+    {
+      "key": "handling",
+      "value": "Управляемость"
+    },
+    {
+      "key": "breaking",
+      "value": "Торможение"
+    },
+    {
+      "key": "nitro",
+      "value": "Нитро"
+    },
+    {
+      "key": "durability",
+      "value": "Прочность"
+    },
+    {
+      "key": "buy",
+      "value": "Купить"
+    },
+    {
+      "key": "unlock",
+      "value": "Разблокирвать"
+    },
+    {
+      "key": "lvl",
+      "value": "ур."
+    },
+    {
+      "key": "language",
+      "value": "Язык"
+    },
+    {
+      "key": "steering",
+      "value": "Управление"
+    },
+    {
+      "key": "music",
+      "value": "Музыка"
+    },
+    {
+      "key": "sfx",
+      "value": "Звук.эффекты"
+    },
+    {
+      "key": "one_sided",
+      "value": "Односторонний"
+    },
+    {
+      "key": "two_sided",
+      "value": "Двустроннее"
+    },
+    {
+      "key": "in_time",
+      "value": "На время"
+    },
+    {
+      "key": "game_mode",
+      "value": "Игровой режим"
+    },
+    {
+      "key": "location",
+      "value": "Локация"
+    },
+    {
+      "key": "city",
+      "value": "Город"
+    },
+    {
+      "key": "desert",
+      "value": "Пустыня"
+    },
+    {
+      "key": "high_speed",
+      "value": "Высокая скорость"
+    },
+    {
+      "key": "driving_opposite",
+      "value": "По встречке"
+    },
+    {
+      "key": "resume",
+      "value": "Продолжить"
+    },
+    {
+      "key": "continue",
+      "value": "Продолжить?"
+    },
+    {
+      "key": "end_game",
+      "value": "Конец\nигры"
+    },
+    {
+      "key": "one_more_chance",
+      "value": "Дать\nшанс"
+    },
+    {
+      "key": "distance",
+      "value": "Дистанция:"
+    },
+    {
+      "key": "average_speed",
+      "value": "Средняя скорость:"
+    },
+    {
+      "key": "dangerous_overtaking",
+      "value": "Опасное сближение:"
+    },
+    {
+      "key": "high_speed",
+      "value": "Высокая скорость:"
+    },
+    {
+      "key": "driving_on_the_opposite",
+      "value": "Вождение по встречке:"
+    },
+    {
+      "key": "total",
+      "value": "Итог:"
+    },
+    {
+      "key": "gyro",
+      "value": "Гироскоп"
+    },
+    {
+      "key": "touch",
+      "value": "Касание"
+    },
+    {
+      "key": "settings",
+      "value": "Настройки"
+    },
+    {
+      "key": "pause",
+      "value": "Пауза"
+    },
+    {
+      "key": "restart",
+      "value": "Заново"
+    },
+    {
+      "key": "garage",
+      "value": "Гараж"
+    },
+    {
+      "key": "score",
+      "value": "Очки:\n{0}"
+    }
+  ]
+}

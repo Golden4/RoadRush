@@ -1,0 +1,168 @@
+{
+  "items": [
+    {
+      "key": "play_btn",
+      "value": "Play"
+    },
+    {
+      "key": "settings_btn",
+      "value": "Settings"
+    },
+    {
+      "key": "max_speed",
+      "value": "Max.speed'"
+    },
+    {
+      "key": "acceleration",
+      "value": "Acceleration"
+    },
+    {
+      "key": "handling",
+      "value": "Handling"
+    },
+    {
+      "key": "breaking",
+      "value": "Breaking"
+    },
+    {
+      "key": "nitro",
+      "value": "Nitro"
+    },
+    {
+      "key": "durability",
+      "value": "Durability"
+    },
+    {
+      "key": "buy",
+      "value": "Buy"
+    },
+    {
+      "key": "unlock",
+      "value": "Unlock"
+    },
+    {
+      "key": "lvl",
+      "value": "lvl"
+    },
+    {
+      "key": "language",
+      "value": "Language"
+    },
+    {
+      "key": "steering",
+      "value": "Steering"
+    },
+    {
+      "key": "music",
+      "value": "Music"
+    },
+    {
+      "key": "sfx",
+      "value": "SFX"
+    },
+    {
+      "key": "one_sided",
+      "value": "One-sided"
+    },
+    {
+      "key": "two_sided",
+      "value": "Two-sided"
+    },
+    {
+      "key": "in_time",
+      "value": "In time"
+    },
+    {
+      "key": "game_mode",
+      "value": "Game mode"
+    },
+    {
+      "key": "location",
+      "value": "Location"
+    },
+    {
+      "key": "city",
+      "value": "City"
+    },
+    {
+      "key": "desert",
+      "value": "Desert"
+    },
+    {
+      "key": "high_speed",
+      "value": "High speed"
+    },
+    {
+      "key": "driving_opposite",
+      "value": "Driving on the opposite"
+    },
+    {
+      "key": "resume",
+      "value": "Resume"
+    },
+    {
+      "key": "continue",
+      "value": "Continue?"
+    },
+    {
+      "key": "end_game",
+      "value": "End\ngame"
+    },
+    {
+      "key": "one_more_chance",
+      "value": "One More\nChance"
+    },
+    {
+      "key": "distance",
+      "value": "Distance:"
+    },
+    {
+      "key": "average_speed",
+      "value": "Average speed:"
+    },
+    {
+      "key": "dangerous_overtaking",
+      "value": "Dangerous overtaking:"
+    },
+    {
+      "key": "high_speed",
+      "value": "High speed:"
+    },
+    {
+      "key": "driving_on_the_opposite",
+      "value": "Driving on the opposite:"
+    },
+    {
+      "key": "total",
+      "value": "Total:"
+    },
+    {
+      "key": "gyro",
+      "value": "Gyro"
+    },
+    {
+      "key": "touch",
+      "value": "Touch"
+    },
+    {
+      "key": "settings",
+      "value": "Settings"
+    },
+    {
+      "key": "pause",
+      "value": "Pause"
+    },
+    {
+      "key": "restart",
+      "value": "Restart"
+    },
+    {
+      "key": "garage",
+      "value": "Garage"
+    },
+    {
+      "key": "score",
+      "value": "Score:\n{0}"
+    }
+  ]
+}
