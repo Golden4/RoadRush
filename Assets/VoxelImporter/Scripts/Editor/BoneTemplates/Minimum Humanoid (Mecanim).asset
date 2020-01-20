@@ -1,0 +1,149 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ec11ee8e977524ebba52f9f25bd9e8, type: 3}
+  m_Name: Minimum Humanoid (Mecanim)
+  m_EditorClassIdentifier: 
+  boneInitializeData:
+  - name: 48697073
+    parentName: 
+    position: {x: 0, y: 6, z: 0}
+    disablePositionAnimation: 0
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 0
+    mirrorSetBonePosition: 0
+    mirrorSetBoneWeight: 0
+  - name: 5370696e65
+    parentName: 48697073
+    position: {x: 0, y: 2, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 0
+    mirrorSetBonePosition: 0
+    mirrorSetBoneWeight: 0
+  - name: 48656164
+    parentName: 5370696e65
+    position: {x: 0, y: 5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 0
+    mirrorSetBonePosition: 0
+    mirrorSetBoneWeight: 0
+  - name: 4c656674557070657241726d
+    parentName: 5370696e65
+    position: {x: -2, y: 1.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c6566744c6f77657241726d
+    parentName: 4c656674557070657241726d
+    position: {x: -3, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c65667448616e64
+    parentName: 4c6566744c6f77657241726d
+    position: {x: -2.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 5269676874557070657241726d
+    parentName: 5370696e65
+    position: {x: 2, y: 1.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 52696768744c6f77657241726d
+    parentName: 5269676874557070657241726d
+    position: {x: 3, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 526967687448616e64
+    parentName: 52696768744c6f77657241726d
+    position: {x: 2.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c65667455707065724c6567
+    parentName: 48697073
+    position: {x: -0.99999994, y: -1, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c6566744c6f7765724c6567
+    parentName: 4c65667455707065724c6567
+    position: {x: 0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c656674466f6f74
+    parentName: 4c6566744c6f7765724c6567
+    position: {x: 0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 526967687455707065724c6567
+    parentName: 48697073
+    position: {x: 0.99999994, y: -1, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 52696768744c6f7765724c6567
+    parentName: 526967687455707065724c6567
+    position: {x: 0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 5269676874466f6f74
+    parentName: 52696768744c6f7765724c6567
+    position: {x: -0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1

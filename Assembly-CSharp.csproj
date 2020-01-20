@@ -92,6 +92,7 @@
     <Compile Include="Assets\_Scripts\PauseManager.cs" />
     <Compile Include="Assets\_Scripts\PlayerCar.cs" />
     <Compile Include="Assets\_Scripts\PlayerCarController.cs" />
+    <Compile Include="Assets\_Scripts\PurchaseManager.cs" />
     <Compile Include="Assets\_Scripts\SaveLoadHelper.cs" />
     <Compile Include="Assets\_Scripts\ScoreController.cs" />
     <Compile Include="Assets\_Scripts\Screens\KScreen.cs" />
@@ -111,20 +112,54 @@
     <Compile Include="Assets\_Scripts\Shop\LocationSelectScreen.cs" />
     <Compile Include="Assets\_Scripts\Shop\ShopController.cs" />
     <Compile Include="Assets\_Scripts\Singleton.cs" />
+    <Compile Include="Assets\_Scripts\SingletonResourse.cs" />
     <Compile Include="Assets\_Scripts\SkidMark.cs" />
     <Compile Include="Assets\_Scripts\TimeManager.cs" />
     <Compile Include="Assets\_Scripts\Utility.cs" />
-    <Compile Include="Assets\ProCore\QuickBrush\QuickBrushClasses\qb_Group.cs" />
-    <Compile Include="Assets\ProCore\QuickBrush\QuickBrushClasses\qb_Object.cs" />
-    <Compile Include="Assets\ProCore\QuickBrush\QuickBrushClasses\qb_ObjectContainer.cs" />
-    <Compile Include="Assets\ProCore\QuickBrush\QuickBrushClasses\qb_Point.cs" />
-    <Compile Include="Assets\ProCore\QuickBrush\QuickBrushClasses\qb_PrefabObject.cs" />
-    <Compile Include="Assets\ProCore\QuickBrush\QuickBrushClasses\qb_RaycastResult.cs" />
-    <Compile Include="Assets\ProCore\QuickBrush\QuickBrushClasses\qb_Stroke.cs" />
     <Compile Include="Assets\Resources\MirrorReflection.cs" />
     <Compile Include="Assets\Simple Mesh Combine\Scripts\SimpleMeshCombine.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Assets\CreateCubes.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Assets\FrameAnimationChanger.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Assets\FrameAnimationScriptChange.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Assets\VoxelExplosionUI.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\CameraController.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\ColliderTest.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\EditMesh.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\IKControl.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\RigidbodyDisable.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\RigidbodyEnable.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\TouchRigidbodyExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Examples\Scripts\TouchVoxelExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Common\DataTable.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Common\FlagTable.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Common\IntVector.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Data\DisableData.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Data\MaterialData.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Data\StructureData.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Data\VoxelData.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Data\WeightData.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Extra\VoxelBaseExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Extra\VoxelChunksObjectChunkExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Extra\VoxelChunksObjectExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Extra\VoxelFrameAnimationObjectExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Extra\VoxelObjectExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\Extra\VoxelSkinnedAnimationObjectExplosion.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\ScriptableObject\VoxelStructure.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\VoxelBase.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\VoxelChunksObject.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\VoxelChunksObjectChunk.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\VoxelFrameAnimationObject.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\VoxelObject.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\VoxelSkinnedAnimationObject.cs" />
+    <Compile Include="Assets\VoxelImporter\Scripts\VoxelSkinnedAnimationObjectBone.cs" />
+    <None Include="Assets\VoxelImporter\Shader\Explosion\VoxelExplosion-Transparent.shader" />
+    <None Include="Assets\VoxelImporter\Shader\Explosion\VoxelExplosion.cginc" />
+    <None Include="Assets\VoxelImporter\ReadMe_en.txt" />
+    <None Include="Assets\VoxelImporter\Shader\Explosion\VoxelExplosion-Opaque.shader" />
     <None Include="Assets\Resources\Shaders\MirrorReflection.shader" />
     <None Include="Assets\Resources\Shaders\TransperentShader.shader" />
+    <None Include="Assets\VoxelImporter\ReadMe_jp.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/GameDev/RoadRush/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -331,6 +366,33 @@
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
       <HintPath>D:/GameDev/RoadRush/Library/PackageCache/com.unity.purchasing@2.0.6/UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="UDP">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UDP/UDP.dll</HintPath>
+    </Reference>
+    <Reference Include="Security">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/Bin/Security/live/Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Stores">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
+    </Reference>
+    <Reference Include="Editor">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Purchasing.Common">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="winrt">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
+    </Reference>
+    <Reference Include="FacebookStore">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/Bin/Facebook/FacebookStore.dll</HintPath>
+    </Reference>
+    <Reference Include="Apple">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
+    </Reference>
+    <Reference Include="Tizen">
+      <HintPath>D:/GameDev/RoadRush/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Programs/2019.2.18f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

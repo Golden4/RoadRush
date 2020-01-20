@@ -159,8 +159,11 @@ public class GameManager : MonoBehaviour {
             Database.PlayerData.levelsData.Reset();
         }
 
-        ruby = 1000;
-
+        if (Debug.isDebugBuild)
+        {
+            ruby = 1000;
+            money = 1000000;
+        }
     }
 
 	void OnApplicationPause ()

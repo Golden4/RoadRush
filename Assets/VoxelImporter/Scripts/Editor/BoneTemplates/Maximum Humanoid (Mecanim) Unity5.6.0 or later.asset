@@ -1,0 +1,509 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ec11ee8e977524ebba52f9f25bd9e8, type: 3}
+  m_Name: Maximum Humanoid (Mecanim) Unity5.6.0 or later
+  m_EditorClassIdentifier: 
+  boneInitializeData:
+  - name: 48697073
+    parentName: 
+    position: {x: 0, y: 6, z: 0}
+    disablePositionAnimation: 0
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 0
+    mirrorSetBonePosition: 0
+    mirrorSetBoneWeight: 0
+  - name: 5370696e65
+    parentName: 48697073
+    position: {x: 0, y: 1.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 0
+    mirrorSetBonePosition: 0
+    mirrorSetBoneWeight: 0
+  - name: 4368657374
+    parentName: 5370696e65
+    position: {x: 0, y: 1, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 55707065724368657374
+    parentName: 4368657374
+    position: {x: 0, y: 1, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c65667453686f756c646572
+    parentName: 55707065724368657374
+    position: {x: -1.5, y: 0.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c656674557070657241726d
+    parentName: 4c65667453686f756c646572
+    position: {x: -1.5, y: -0.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c6566744c6f77657241726d
+    parentName: 4c656674557070657241726d
+    position: {x: -2, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c65667448616e64
+    parentName: 4c6566744c6f77657241726d
+    position: {x: -2.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c6566745468756d6250726f78696d616c
+    parentName: 4c65667448616e64
+    position: {x: -0.5, y: 0, z: 1}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566745468756d62496e7465726d656469617465
+    parentName: 4c6566745468756d6250726f78696d616c
+    position: {x: -0.5, y: 0, z: 0.5}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566745468756d6244697374616c
+    parentName: 4c6566745468756d62496e7465726d656469617465
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c656674496e64657850726f78696d616c
+    parentName: 4c65667448616e64
+    position: {x: -1, y: 0, z: 0.5}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c656674496e646578496e7465726d656469617465
+    parentName: 4c656674496e64657850726f78696d616c
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c656674496e64657844697374616c
+    parentName: 4c656674496e646578496e7465726d656469617465
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566744d6964646c6550726f78696d616c
+    parentName: 4c65667448616e64
+    position: {x: -1, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566744d6964646c65496e7465726d656469617465
+    parentName: 4c6566744d6964646c6550726f78696d616c
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566744d6964646c6544697374616c
+    parentName: 4c6566744d6964646c65496e7465726d656469617465
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c65667452696e6750726f78696d616c
+    parentName: 4c65667448616e64
+    position: {x: -1, y: 0, z: -0.5}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c65667452696e67496e7465726d656469617465
+    parentName: 4c65667452696e6750726f78696d616c
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c65667452696e6744697374616c
+    parentName: 4c65667452696e67496e7465726d656469617465
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566744c6974746c6550726f78696d616c
+    parentName: 4c65667448616e64
+    position: {x: -1, y: 0, z: -1}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566744c6974746c65496e7465726d656469617465
+    parentName: 4c6566744c6974746c6550726f78696d616c
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c6566744c6974746c6544697374616c
+    parentName: 4c6566744c6974746c65496e7465726d656469617465
+    position: {x: -0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 526967687453686f756c646572
+    parentName: 55707065724368657374
+    position: {x: 1.5, y: 0.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 5269676874557070657241726d
+    parentName: 526967687453686f756c646572
+    position: {x: 1.5, y: -0.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 52696768744c6f77657241726d
+    parentName: 5269676874557070657241726d
+    position: {x: 2, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 526967687448616e64
+    parentName: 52696768744c6f77657241726d
+    position: {x: 2.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 52696768745468756d6250726f78696d616c
+    parentName: 526967687448616e64
+    position: {x: 0.5, y: 0, z: 1}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768745468756d62496e7465726d656469617465
+    parentName: 52696768745468756d6250726f78696d616c
+    position: {x: 0.5, y: 0, z: 0.5}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768745468756d6244697374616c
+    parentName: 52696768745468756d62496e7465726d656469617465
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 5269676874496e64657850726f78696d616c
+    parentName: 526967687448616e64
+    position: {x: 1, y: 0, z: 0.5}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 5269676874496e646578496e7465726d656469617465
+    parentName: 5269676874496e64657850726f78696d616c
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 5269676874496e64657844697374616c
+    parentName: 5269676874496e646578496e7465726d656469617465
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768744d6964646c6550726f78696d616c
+    parentName: 526967687448616e64
+    position: {x: 1, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768744d6964646c65496e7465726d656469617465
+    parentName: 52696768744d6964646c6550726f78696d616c
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768744d6964646c6544697374616c
+    parentName: 52696768744d6964646c65496e7465726d656469617465
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 526967687452696e6750726f78696d616c
+    parentName: 526967687448616e64
+    position: {x: 1, y: 0, z: -0.5}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 526967687452696e67496e7465726d656469617465
+    parentName: 526967687452696e6750726f78696d616c
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 526967687452696e6744697374616c
+    parentName: 526967687452696e67496e7465726d656469617465
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768744c6974746c6550726f78696d616c
+    parentName: 526967687448616e64
+    position: {x: 1, y: 0, z: -1}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768744c6974746c65496e7465726d656469617465
+    parentName: 52696768744c6974746c6550726f78696d616c
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 52696768744c6974746c6544697374616c
+    parentName: 52696768744c6974746c65496e7465726d656469617465
+    position: {x: 0.5, y: 0, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4e65636b
+    parentName: 55707065724368657374
+    position: {x: 0, y: 2, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 48656164
+    parentName: 4e65636b
+    position: {x: 0, y: 2, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 0
+    mirrorSetBonePosition: 0
+    mirrorSetBoneWeight: 0
+  - name: 4c656674457965
+    parentName: 48656164
+    position: {x: -2, y: 2, z: 2}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 5269676874457965
+    parentName: 48656164
+    position: {x: 2, y: 2, z: 2}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4a6177
+    parentName: 48656164
+    position: {x: 0, y: -1, z: 2}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 4c65667455707065724c6567
+    parentName: 48697073
+    position: {x: -0.99999994, y: -1, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c6566744c6f7765724c6567
+    parentName: 4c65667455707065724c6567
+    position: {x: 0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c656674466f6f74
+    parentName: 4c6566744c6f7765724c6567
+    position: {x: 0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 4c656674546f6573
+    parentName: 4c656674466f6f74
+    position: {x: 0, y: 0, z: 1}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0
+  - name: 526967687455707065724c6567
+    parentName: 48697073
+    position: {x: 0.99999994, y: -1, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 52696768744c6f7765724c6567
+    parentName: 526967687455707065724c6567
+    position: {x: 0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 5269676874466f6f74
+    parentName: 52696768744c6f7765724c6567
+    position: {x: 0, y: -2.5, z: 0}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 1
+  - name: 5269676874546f6573
+    parentName: 5269676874466f6f74
+    position: {x: -0, y: 0, z: 1}
+    disablePositionAnimation: 1
+    disableRotationAnimation: 0
+    disableScaleAnimation: 1
+    mirrorSetBoneAnimation: 1
+    mirrorSetBonePosition: 1
+    mirrorSetBoneWeight: 0

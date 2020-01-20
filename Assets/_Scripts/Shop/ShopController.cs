@@ -337,7 +337,7 @@ public class ShopController : MonoBehaviour {
 
 	public static int GetUpgradePrice (CarStatInfos carStat)
 	{
-		return (GetBoostLevel (carStat) * nextUpgradePriceMultiplier + startUpgradePrice) * Database.PlayerData.playerCarData [curCarIndex].price / 10000;
+		return (GetBoostLevel (carStat) * nextUpgradePriceMultiplier + startUpgradePrice) * Database.PlayerData.playerCarData [curCarIndex].price / 25000;
 	}
 
 

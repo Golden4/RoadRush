@@ -173,7 +173,7 @@ public class CarAudio : MonoBehaviour {
                 m_LowAccel.volume = lowFade * accFade * soundVolumePersent * volumeLevel * lowSoundVolume;
 				m_LowDecel.volume = lowFade * decFade * soundVolumePersent * volumeLevel * lowSoundVolume;
 				m_HighAccel.volume = highFade * accFade * soundVolumePersent * volumeLevel;
-				m_HighDecel.volume = highFade * decFade * soundVolumePersent * volumeLevel * .7f;
+				m_HighDecel.volume = highFade * decFade * soundVolumePersent * volumeLevel * .6f;
 
 
 				// adjust the doppler levels
@@ -182,7 +182,7 @@ public class CarAudio : MonoBehaviour {
 				m_HighDecel.dopplerLevel = useDoppler ? dopplerLevel : 0;
 				m_LowDecel.dopplerLevel = useDoppler ? dopplerLevel : 0;
 
-                print("Speed:" + m_CarController.speed + " Gear:" + m_CarController.curGear + " Pitch: la:" + m_LowAccel.pitch + "-ld:" + m_LowDecel.pitch + "-ha:" + m_HighAccel.pitch + "-hd:" + m_HighDecel.pitch + "   " + " voloume: la:" + m_LowAccel.volume + "-ld:" + m_LowDecel.volume + "-ha:" + m_HighAccel.volume + "-hd:" + m_HighDecel.volume);
+                //print("Speed:" + m_CarController.speed + " Gear:" + m_CarController.curGear + " Pitch: la:" + m_LowAccel.pitch + "-ld:" + m_LowDecel.pitch + "-ha:" + m_HighAccel.pitch + "-hd:" + m_HighDecel.pitch + "   " + " voloume: la:" + m_LowAccel.volume + "-ld:" + m_LowDecel.volume + "-ha:" + m_HighAccel.volume + "-hd:" + m_HighDecel.volume);
 
 
                 if (m_CarController.input.y < 0 || m_CarController.input.x > .95f || m_CarController.input.x < -.95f)

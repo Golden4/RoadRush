@@ -213,20 +213,20 @@ public class PlayerCar : KMonoBehaviour {
 		targetInput = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 		if (targetInput == Vector2.zero)
 		#endif
-			
-			targetInput = InputManager.MobileInput ();
-		
-		lerpedX = Mathf.Lerp (lerpedX, targetInput.x, Time.deltaTime * 5);
-		input = new Vector2 (lerpedX, targetInput.y);
+		    targetInput = InputManager.MobileInput ();
 
-		
+        float handlingSpeed = Mathf.Clamp(handling * 2, 3, 30);
+
+        lerpedX = Mathf.Lerp (lerpedX, targetInput.x, Time.deltaTime * handlingSpeed);
+		input = new Vector2 (lerpedX, targetInput.y);
+        
 		if (usingNitro)
 			input = new Vector2 (input.x, 1);
 
 		if (speed == minSpeed) {
 			input = new Vector2 (input.x, Mathf.Clamp (input.y, 0f, 1f));
 		}
-
+        Debug.Log(handling);
 	}
 
 	void UpdateCarStats ()

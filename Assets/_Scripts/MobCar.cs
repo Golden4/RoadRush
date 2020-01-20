@@ -54,15 +54,15 @@ public class MobCar : MonoBehaviour {
 	{
 		if (isDead)
 			return;
-        
-        if (Mathf.Abs(PlayerCar.Ins.transform.position.x - transform.position.x) > 1000)
-        {
-            AddToReuseBefore();
-        }
 
-		//CheckCarSides ();
+        //if (Mathf.Abs(PlayerCar.Ins.transform.position.x - transform.position.x) > 1000)
+        //{
+        //AddToReuseBefore();
+        //}
 
-		if (CameraController.Instance.centerRoadPos.x > transform.position.x + 10) {
+        //CheckCarSides ();
+
+        if (CameraController.Instance.centerRoadPos.x > transform.position.x + 10) {
 			MobCarsController.Instance.SpawnMob (curLine);
 			MobCarsController.Instance.AddToReuse (this, curLine);
 		}
