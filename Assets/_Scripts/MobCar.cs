@@ -7,6 +7,7 @@ public class MobCar : MonoBehaviour {
 	public float CarSpeed = 20;
 	public int curLine;
 	bool isDead = false;
+    Rigidbody rb;
 
 	public MoveDir moveDir;
 
@@ -30,10 +31,19 @@ public class MobCar : MonoBehaviour {
 		Material mat = new Material (mmmat.sharedMaterials [1]);
 
 		mat.color = Color.blue;
-
+        rb = GetComponent<Rigidbody>();
+        EventManager.OnPlayerRespawnedEvent += OnPlayerRespawnedEvent;
 	}
 
-	void OnEnable ()
+    private void OnPlayerRespawnedEvent()
+    {
+        if(IsInvoking("AddToReuseBefore"))
+            CancelInvoke("AddToReuseBefore");
+
+        AddToReuseBefore();
+    }
+
+    void OnEnable ()
 	{
 		mmmat.materials [1].color = colors [Random.Range (0, colors.Length)];
 	}
@@ -44,6 +54,11 @@ public class MobCar : MonoBehaviour {
 	{
 		if (isDead)
 			return;
+        
+        if (Mathf.Abs(PlayerCar.Ins.transform.position.x - transform.position.x) > 1000)
+        {
+            AddToReuseBefore();
+        }
 
 		//CheckCarSides ();
 
@@ -93,15 +108,17 @@ public class MobCar : MonoBehaviour {
 	{
 		if (isDead)
 			Break ();
-		
-		Move ();
+		else
+		    Move ();
 	}
 
 	void Move ()
 	{
-		Vector3 pos = transform.position;
+        if (!rb)
+            return;
+		Vector3 pos = rb.position;
 		pos.x += CarSpeed * Time.fixedDeltaTime * ((moveDir == MoveDir.back) ? -1 : 1);
-		transform.position = pos;
+        rb.position = pos;
 	}
 
 	void Break ()
@@ -124,7 +141,7 @@ public class MobCar : MonoBehaviour {
 	{
 		isDead = true;
 		//GetComponent<BoxCollider> ().enabled = false;
-		Invoke ("AddToReuseBefore", 2);
+		Invoke ("AddToReuseBefore", 1);
 
 	}
 
@@ -152,7 +169,10 @@ public class MobCar : MonoBehaviour {
 			Destroy (gameObject.GetComponent<Rigidbody> ());
 	}
 
-
+    private void OnDestroy()
+    {
+        EventManager.OnPlayerRespawnedEvent -= OnPlayerRespawnedEvent;
+    }
 }
 
 public enum MoveDir

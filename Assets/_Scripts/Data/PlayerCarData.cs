@@ -13,7 +13,6 @@ public class PlayerCarData : ScriptableObject {
 
 	public int curCarIndex;
 
-
 }
 
 [System.Serializable]
@@ -48,6 +47,14 @@ public class LevelsStats {
 	public int inTimeRecord = 0;
 
 	public List<int> locationsAvaible = new List<int> ();
+
+
+    public void Reset()
+    {
+        inTimeRecord = 0;
+        oneSidedRecord = 0;
+        twoSidedRecord = 0;
+    }
 
 }
 

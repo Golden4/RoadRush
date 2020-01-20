@@ -18,6 +18,8 @@ public class KScreenManager : MonoBehaviour {
 
 	public GUIAnim fader;
 
+    public string curScreen;
+
 	void Awake ()
 	{
 		Instance = this;
@@ -88,7 +90,11 @@ public class KScreenManager : MonoBehaviour {
 			
 		}
 
-		curDialogIndex = index;
+        if (index >= 0 && index < dialogs.Length)
+            curScreen = dialogs[index].name;
+        else curScreen = "";
+
+        curDialogIndex = index;
 
 	}
 
@@ -102,7 +108,8 @@ public class KScreenManager : MonoBehaviour {
 		if (index >= 0)
 			ShowScreen (index);
 
-	}
+        curScreen = name;
+    }
 
 	public void ShowOneMoreChanceScreen ()
 	{

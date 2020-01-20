@@ -9,6 +9,10 @@
       "value": "Settings"
     },
     {
+      "key": "about_btn",
+      "value": "About"
+    },
+    {
       "key": "max_speed",
       "value": "Max.speed'"
     },
@@ -163,6 +167,10 @@
     {
       "key": "score",
       "value": "Score:\n{0}"
+    },
+    {
+      "key": "store",
+      "value": "Store"
     }
   ]
 }

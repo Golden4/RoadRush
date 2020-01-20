@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	static int _money = 100000;
+	static int _money = 0;
 	static bool moneyLoaded = false;
 
 	public static int money {
@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 				if (PlayerPrefs.HasKey ("money"))
 					_money = PlayerPrefs.GetInt ("money");
 				else {
-					_money = 100000;
+					_money = 0;
 				}
 
 				moneyLoaded = true;
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 
 	}
 
-	static int _ruby = 100;
+	static int _ruby = 0;
 	static bool rubyLoaded = false;
 
 	public static int ruby {
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour {
 				if (PlayerPrefs.HasKey ("ruby"))
 					_ruby = PlayerPrefs.GetInt ("ruby");
 				else
-					_ruby = 1000;
+					_ruby = 0;
 				rubyLoaded = true;
 			}
 
@@ -148,12 +148,20 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
 
+    public bool isNewGame;
 
 	void Awake ()
 	{
 		Instance = this;
+        if (!PlayerPrefs.HasKey("money"))
+        {
+            isNewGame = true;
+            Database.PlayerData.levelsData.Reset();
+        }
 
-	}
+        ruby = 1000;
+
+    }
 
 	void OnApplicationPause ()
 	{
@@ -168,9 +176,7 @@ public class GameManager : MonoBehaviour {
 	{
 
 		int finalMoney = money - moneyCount;
-
-		print (finalMoney + "    " + moneyCount);
-
+    
 		if (finalMoney >= 0) {
 			
 			EventManager.OnMoneyChangedCall (money, finalMoney);
@@ -180,6 +186,7 @@ public class GameManager : MonoBehaviour {
 		} else {
 
 			DialogBox.Show ("Insufficent money", "Buy money?", () => {
+                KScreenManager.Instance.ShowScreen("ValutaShop");
 			}, () => {
 			});
 
@@ -202,7 +209,8 @@ public class GameManager : MonoBehaviour {
 		} else {
 
 			DialogBox.Show ("Insufficent ruby", "Buy ruby?", () => {
-			}, () => {
+                KScreenManager.Instance.ShowScreen("ValutaShop");
+            }, () => {
 			});
 
 			return false;

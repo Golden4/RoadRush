@@ -12,7 +12,7 @@ public class GiftController : MonoBehaviour {
 
 	public DateTime nextGiveGiftTime;
 
-	public int money = 10000;
+	int money = 5000;
 
 	void Start ()
 	{
@@ -32,7 +32,7 @@ public class GiftController : MonoBehaviour {
 	{
 		if (CanTakeGift ()) {
 
-			nextGiveGiftTime = DateTime.Now.AddMinutes (1);
+			nextGiveGiftTime = DateTime.Now.AddMinutes (10);
 
 			PlayerPrefs.SetString ("giftTime", nextGiveGiftTime.Ticks.ToString ());
 
@@ -68,7 +68,6 @@ public class GiftController : MonoBehaviour {
 
 	void OnCanTakeGift ()
 	{
-		print ("OnCanTakeGift");
 		giftBtn.enabled = true;
 		timer.gameObject.SetActive (false);
 		giftBtn.GetComponent<Animation> ().Play ();
@@ -77,7 +76,6 @@ public class GiftController : MonoBehaviour {
 
 	void OnDontTakeGift ()
 	{
-		print ("OnDontTakeGift");
 		giftBtn.enabled = false;
 		timer.gameObject.SetActive (true);
 		giftBtn.GetComponent<Animation> ().wrapMode = WrapMode.Clamp;

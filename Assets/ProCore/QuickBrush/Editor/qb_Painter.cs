@@ -820,7 +820,7 @@ public class qb_Painter : EditorWindow
             switch (Event.current.type)
             {
 
-                case EventType.mouseUp:
+                case EventType.MouseUp:
                     if (Event.current.button == 0)
                     {
                         if (brushMode == BrushMode.On)
@@ -838,7 +838,7 @@ public class qb_Painter : EditorWindow
                     }
                     break;
 
-                case EventType.mouseDown:
+                case EventType.MouseDown:
                     if (Event.current.button == 0)
                     {
                         if (brushMode == BrushMode.On)
@@ -868,7 +868,7 @@ public class qb_Painter : EditorWindow
                     }
                     break;
 
-                case EventType.mouseDrag:
+                case EventType.MouseDrag:
                     if (Event.current.button == 0)
                     {
                         if (brushMode == BrushMode.On)
@@ -898,7 +898,7 @@ public class qb_Painter : EditorWindow
                     HandleUtility.Repaint();
                     break;
 
-                case EventType.mouseMove:
+                case EventType.MouseMove:
                     HandleUtility.Repaint();
                     break;
 

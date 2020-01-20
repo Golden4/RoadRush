@@ -38,7 +38,7 @@ public class CarAudio : MonoBehaviour {
 	// The maximum distance where rollof starts to take place
 	public float dopplerLevel = 1;
 	// The mount of doppler effect used in the audio
-	public bool useDoppler = true;
+	bool useDoppler = false;
 	// Toggle for using doppler
 
 	private AudioSource m_LowAccel;
@@ -53,10 +53,11 @@ public class CarAudio : MonoBehaviour {
 	private bool m_StartedSound = false;
 	// flag for knowing if we have started sounds
 	private PlayerCar m_CarController;
-	// Reference to car we are controlling
+    // Reference to car we are controlling
 
+    public float Revs { get; private set; }
 
-	private void StartSound ()
+    private void StartSound ()
 	{
 		// get the carcontroller ( this will not be null as we have require component)
 		m_CarController = GetComponent<PlayerCar> ();
@@ -121,8 +122,11 @@ public class CarAudio : MonoBehaviour {
 		}
 
 		if (m_StartedSound) {
-			// The pitch is interpolated between the min and max values, according to the car's revs.
-			float pitch = ULerp (lowPitchMin, lowPitchMax, m_CarController.Revs);
+
+            CalculateRevs();
+
+            // The pitch is interpolated between the min and max values, according to the car's revs.
+            float pitch = ULerp (lowPitchMin, lowPitchMax, Revs);
 
 			// clamp to minimum pitch (note, not clamped to max for high revs while burning out)
 			pitch = Mathf.Min (lowPitchMax, pitch);
@@ -141,16 +145,16 @@ public class CarAudio : MonoBehaviour {
 				m_LowDecel.pitch = pitch * pitchMultiplier;
 				m_HighAccel.pitch = pitch * highPitchMultiplier * pitchMultiplier;
 				m_HighDecel.pitch = pitch * highPitchMultiplier * pitchMultiplier;
+                
 
-
-				inputLerped = Mathf.Lerp (inputLerped, m_CarController.input.y, Time.deltaTime * 7);
+				inputLerped = Mathf.Lerp (inputLerped, m_CarController.input.y, Time.deltaTime * 3);
 
 				// get values for fading the sounds based on the acceleration
 				float accFade = Mathf.Clamp01 (inputLerped);
 				float decFade = 1 - accFade;
 
 				// get the high fade value based on the cars revs
-				float highFade = Mathf.InverseLerp (0.2f, 0.8f, m_CarController.Revs);
+				float highFade = Mathf.InverseLerp (0.2f, 0.8f, Revs);
 				float lowFade = 1 - highFade;
 
 				// adjust the values to be more realistic
@@ -159,29 +163,39 @@ public class CarAudio : MonoBehaviour {
 				accFade = 1 - ((1 - accFade) * (1 - accFade));
 				decFade = 1 - ((1 - decFade) * (1 - decFade));
 
+
 				// adjust the source volumes based on the fade values
 
 				float soundVolumePersent = AudioManager.Instance.sfxVolumePercent * AudioManager.Instance.masterVolumePercent;
 
-				m_LowAccel.volume = lowFade * accFade * soundVolumePersent * volumeLevel;
-				m_LowDecel.volume = lowFade * decFade * soundVolumePersent * volumeLevel;
+                float lowSoundVolume = .3f;
+                
+                m_LowAccel.volume = lowFade * accFade * soundVolumePersent * volumeLevel * lowSoundVolume;
+				m_LowDecel.volume = lowFade * decFade * soundVolumePersent * volumeLevel * lowSoundVolume;
 				m_HighAccel.volume = highFade * accFade * soundVolumePersent * volumeLevel;
-				m_HighDecel.volume = highFade * decFade * soundVolumePersent * volumeLevel;
+				m_HighDecel.volume = highFade * decFade * soundVolumePersent * volumeLevel * .7f;
 
-				if (m_CarController.input.y < 0 || m_CarController.input.x > .95f || m_CarController.input.x < -.95f)
-					inputLerp = Mathf.Lerp (inputLerp, m_CarController.input.y, Time.deltaTime * 7);
-				else {
-					inputLerp = Mathf.Lerp (inputLerp, 0, Time.deltaTime * 7);
-				}
-
-				m_Skid.volume = Mathf.Abs (inputLerp) / 1.5f;
 
 				// adjust the doppler levels
 				m_HighAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
 				m_LowAccel.dopplerLevel = useDoppler ? dopplerLevel : 0;
 				m_HighDecel.dopplerLevel = useDoppler ? dopplerLevel : 0;
 				m_LowDecel.dopplerLevel = useDoppler ? dopplerLevel : 0;
-			}
+
+                print("Speed:" + m_CarController.speed + " Gear:" + m_CarController.curGear + " Pitch: la:" + m_LowAccel.pitch + "-ld:" + m_LowDecel.pitch + "-ha:" + m_HighAccel.pitch + "-hd:" + m_HighDecel.pitch + "   " + " voloume: la:" + m_LowAccel.volume + "-ld:" + m_LowDecel.volume + "-ha:" + m_HighAccel.volume + "-hd:" + m_HighDecel.volume);
+
+
+                if (m_CarController.input.y < 0 || m_CarController.input.x > .95f || m_CarController.input.x < -.95f)
+                    inputLerp = Mathf.Lerp(inputLerp, m_CarController.input.y, Time.deltaTime * 7);
+                else
+                {
+                    inputLerp = Mathf.Lerp(inputLerp, 0, Time.deltaTime * 7);
+                }
+
+                m_Skid.volume = Mathf.Abs(inputLerp) / 1.5f;
+
+
+            }
 		}
 	}
 
@@ -206,7 +220,7 @@ public class CarAudio : MonoBehaviour {
 
 
 	// unclamped versions of Lerp and Inverse Lerp, to allow value to exceed the from-to range
-	private static float ULerp (float from, float to, float value)
+	float ULerp (float from, float to, float value)
 	{
 		return (1.0f - value) * from + value * to;
 
@@ -239,7 +253,43 @@ public class CarAudio : MonoBehaviour {
 		m_Skid.UnPause ();
 	}
 
-	void Awake ()
+
+    float m_GearFactor;
+
+    void CalculateRevs()
+    {
+
+        CalculateGearFactor();
+
+        float prevGearSpeed = ((m_CarController.curGear > 0) ? m_CarController.gears[m_CarController.curGear - 1].speedForSwitch : m_CarController.minSpeed);
+
+        float revs = Mathf.InverseLerp(prevGearSpeed, m_CarController.gears[m_CarController.curGear].speedForSwitch, m_CarController.speed);
+
+        float gearNumFactor = prevGearSpeed / m_CarController.gears[m_CarController.gears.Length - 1].speedForSwitch;
+
+        var revsRangeMin = ULerp(0f, 1, CurveFactor(gearNumFactor));
+        var revsRangeMax = ULerp(1, 1f, gearNumFactor);
+
+        Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
+    }
+    
+    void CalculateGearFactor()
+    {
+        float prevGearSpeed = ((m_CarController.curGear > 0) ? m_CarController.gears[m_CarController.curGear - 1].speedForSwitch : m_CarController.minSpeed);
+
+        float gearNumFactor = prevGearSpeed / m_CarController.gears[m_CarController.gears.Length - 1].speedForSwitch;
+
+        var targetGearFactor = Mathf.InverseLerp(prevGearSpeed, m_CarController.gears[m_CarController.curGear].speedForSwitch, m_CarController.speed);
+
+        m_GearFactor = Mathf.Lerp(m_GearFactor, targetGearFactor, Time.deltaTime * 5f);
+    }
+    
+    float CurveFactor(float factor)
+    {
+        return 1 - (1 - factor) * (1 - factor);
+    }
+
+    void Awake ()
 	{
 		EventManager.OnPlayerDeathEvent += StopPlayingSounds;
 		EventManager.OnPlayerRespawnedEvent += StartPlayingSounds;

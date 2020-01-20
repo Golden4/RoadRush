@@ -9,6 +9,10 @@
       "value": "Настройки"
     },
     {
+      "key": "about_btn",
+      "value": "Об игре"
+    },
+    {
       "key": "max_speed",
       "value": "Макс. скорость"
     },
@@ -163,6 +167,10 @@
     {
       "key": "score",
       "value": "Очки:\n{0}"
+    },
+    {
+      "key": "store",
+      "value": "Магазин"
     }
   ]
 }

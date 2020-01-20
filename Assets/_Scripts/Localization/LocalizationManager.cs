@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -31,9 +31,14 @@ public class LocalizationManager : MonoBehaviour {
 		if (!isLoaded) {
 
 			curLanguage = Application.systemLanguage;
-
-			LoadLocalizedTexts (GetFileName (curLanguage));
-
+			//#if UNITY_ANDROID
+			if (Application.isMobilePlatform) {
+				loadLocalizedTexts (GetFileName (curLanguage));
+			} else {
+				//#else
+				LoadLocalizedTexts (GetFileName (curLanguage));
+			}
+			//#endif
 		}
 
 		string valueText = "";
@@ -53,23 +58,31 @@ public class LocalizationManager : MonoBehaviour {
 
 	}
 
+	static void loadLocalizedTexts (string fileName)
+	{
+
+		string filePath = Path.Combine ("jar:file://" + Application.dataPath + "!/assets/", fileName);
+		WWW www = new WWW (filePath);
+		while (!www.isDone) {
+		}
+		LocalizationData loadedData = SetJsonToLocailizedText (www.text);
+		Debug.Log ("localizedText loaded: " + loadedData.items.Length);
+		isLoaded = true;
+		Debug.Log (filePath);
+	}
+
 	static void LoadLocalizedTexts (string fileName)
 	{
-		string filePath = Path.Combine (Application.streamingAssetsPath, fileName);
+
+		string filePath;
+
+		filePath = Path.Combine (Application.streamingAssetsPath, fileName);
 
 		if (File.Exists (filePath)) {
 
 			string jsonDataString = File.ReadAllText (filePath);
 
-			LocalizationData loadedData = JsonUtility.FromJson<LocalizationData> (jsonDataString);
-
-			localizedText.Clear ();
-
-			for (int i = 0; i < loadedData.items.Length; i++) {
-				localizedText [loadedData.items [i].key] = loadedData.items [i].value;
-			}
-
-			Debug.Log ("localizedText loaded: " + loadedData.items.Length);
+			LocalizationData loadedData = SetJsonToLocailizedText (jsonDataString);
 
 		} else {
 			Debug.LogError ("Localization file not founded");
@@ -78,11 +91,30 @@ public class LocalizationManager : MonoBehaviour {
 
 	}
 
+	static LocalizationData SetJsonToLocailizedText (string jsonDataString)
+	{
+		LocalizationData loadedData = JsonUtility.FromJson<LocalizationData> (jsonDataString);
+
+		localizedText.Clear ();
+
+		for (int i = 0; i < loadedData.items.Length; i++) {
+			localizedText [loadedData.items [i].key] = loadedData.items [i].value;
+		}
+
+
+		return loadedData;
+	}
+
 	public static void ChangeLanguage (SystemLanguage language)
 	{
 		curLanguage = language;
 
-		LoadLocalizedTexts (GetFileName (curLanguage));
+		if (Application.isMobilePlatform) {
+			loadLocalizedTexts (GetFileName (curLanguage));
+		} else {
+			//#else
+			LoadLocalizedTexts (GetFileName (curLanguage));
+		}
 
 		print (language.ToString ());
 
@@ -116,7 +148,6 @@ public class LanguageInfo {
 			this.font = (Font)Resources.Load<Font> ("Fonts/" + fontName);
 
 		fontStyle = style;
-		Debug.Log (font);
 
 		this.filePrefix = filePrefix;
 		this.name = lang.ToString ();

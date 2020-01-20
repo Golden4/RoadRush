@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class GameModeSelectScreen : MonoBehaviour {
 
 	public Button[] dialogBtns;
-
-	public Button backBtn;
+    
 
 	void Start ()
 	{
@@ -24,10 +23,7 @@ public class GameModeSelectScreen : MonoBehaviour {
 
 			dialogBtns [i].transform.Find ("Record").GetComponentInChildren<Text> ().text = Database.GetLevelRecord ((LevelInfo.GameMode)i).ToString ();
 		}
-
-		backBtn.onClick.AddListener (() => {
-			KScreenManager.Instance.ShowScreen ("Shop");
-		});
+        
 	}
 
 	void ChangeGameMode (int index)

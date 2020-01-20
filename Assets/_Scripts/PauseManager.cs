@@ -19,7 +19,8 @@ public class PauseManager : MonoBehaviour {
 	{
 		if (!Unfreezing) {
 			KScreenManager.Instance.ShowScreen (-1);
-			StartCoroutine ("UnfreezeTimeCorutine");
+            StopCoroutine("UnfreezeTimeCorutine");
+            StartCoroutine ("UnfreezeTimeCorutine");
 		}
 	}
 
@@ -81,10 +82,6 @@ public class PauseManager : MonoBehaviour {
 
 	void OnUnfreezeTime ()
 	{
-		print ("UnfreezeTime");
-
-		//KScreenManager.EnableRaycaster (true);
-
 
 		KScreenManager.Instance.ShowScreen ("UI");
 
@@ -106,7 +103,8 @@ public class PauseManager : MonoBehaviour {
 	{
 		if (!Unfreezing) {
 			isPauseScreen = false;
-			StartCoroutine ("UnfreezeTimeCorutine");
+            StopCoroutine("UnfreezeTimeCorutine");
+            StartCoroutine ("UnfreezeTimeCorutine");
 			//KScreenManager.Instance.ShowScreen (-1);
 		}
 	}
@@ -145,16 +143,6 @@ public class PauseManager : MonoBehaviour {
 	{
 		UnFreezeTime ();
 	}
-
-	/*public override void OnInit ()
-	{
-		SceneManager.sceneLoaded += OnFreezeTime;
-	}
-
-	public override void OnCleanUp ()
-	{
-		SceneManager.sceneLoaded -= OnFreezeTime;
-	}*/
 
 
 }

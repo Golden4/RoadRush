@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{F6E05E02-912B-655C-8021-21BE565D98FA}</ProjectGuid>
+    <ProjectGuid>{8FD992F4-210D-8611-6D9E-1E6ACA591959}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-UnityScript-Editor</AssemblyName>
@@ -177,7 +177,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="GETween">
- <HintPath>D:/GameDev/BikeGame/Assets/Plugins/GETween.dll</HintPath>
+ <HintPath>D:/GameDev/RoadRush/Assets/Plugins/GETween.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
@@ -191,9 +191,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{8B85F823-6575-C247-A9EB-08F4EAF987C7}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{DE6949CF-9DE5-554F-42CA-C8D6CF680B49}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{647474F2-3D88-7979-53A1-9A30D39D637E}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{F27EEB1D-8307-4204-C818-C730EAA855C5}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

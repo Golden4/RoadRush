@@ -10,9 +10,7 @@ public class AudioManager : SingletonResource<AudioManager> {
 
 	public static bool musicEnabled = true;
 	public static bool sfxEnabled = true;
-
-	int activeMusicSourceIndex;
-
+    
 	bool startedMusic;
 	bool startedSFX;
 
@@ -32,7 +30,7 @@ public class AudioManager : SingletonResource<AudioManager> {
 		}
 	}*/
 
-	AudioSource[] musicSources;
+	AudioSource musicSource;
 	AudioSource sfxSource;
 
 	/*	void Start ()
@@ -50,43 +48,39 @@ public class AudioManager : SingletonResource<AudioManager> {
 	{
 		DontDestroyOnLoad (this);
 
-		CreateSourses ();
-		Subsribe ();
+		CreateMusicSourse ();
+        CreateSfxSource();
+
+        Subsribe ();
 		ChangeMusic (UnityEngine.SceneManagement.SceneManager.GetActiveScene (), UnityEngine.SceneManagement.LoadSceneMode.Single);
 	}
 
 	public void PauseSounds ()
 	{
-		foreach (AudioSource source in musicSources) {
-			source.Pause ();
-		}
+        musicSource.Pause ();
+		
 
 		sfxSource.Pause ();
 	}
 
 	public void UnpauseSounds ()
 	{
-		foreach (AudioSource source in musicSources) {
-			source.UnPause ();
-		}
+        musicSource.UnPause ();
 
 		sfxSource.UnPause ();
 	}
 
 	public void StopSounds ()
 	{
-		foreach (AudioSource source in musicSources) {
-			source.Stop ();
-		}
+        musicSource.Stop ();
 
 		sfxSource.Stop ();
 	}
 
 	public void StartSounds ()
 	{
-		foreach (AudioSource source in musicSources) {
-			source.Play ();
-		}
+        musicSource.Play ();
+		
 
 		sfxSource.Play ();
 	}
@@ -96,37 +90,34 @@ public class AudioManager : SingletonResource<AudioManager> {
 
 	}
 
-	void CreateSourses ()
+	void CreateMusicSourse ()
 	{
-		musicSources = new AudioSource[2];
-
-		for (int i = 0; i < 2; i++) {
-			GameObject go = new GameObject ("MusicSource" + (i + 1));
-			musicSources [i] = go.AddComponent<AudioSource> ();
-			musicSources [i].loop = true;
-			musicSources [i].transform.parent = transform;
-		}
-
-		GameObject newGO = new GameObject ("SfxSource");
-		sfxSource = newGO.AddComponent<AudioSource> ();
-		newGO.transform.parent = transform;
-
+		GameObject go = new GameObject ("MusicSource");
+		musicSource = go.AddComponent<AudioSource> ();
+		musicSource.loop = true;
+		musicSource.transform.parent = transform;
+		
 	}
+
+    void CreateSfxSource()
+    {
+        GameObject newGO = new GameObject("SfxSource");
+        sfxSource = newGO.AddComponent<AudioSource>();
+        newGO.transform.parent = transform;
+    }
 
 	public void PlayMusic (AudioClip clip)
 	{
-		if (musicSources == null) {
-			CreateSourses ();
+		if (musicSource == null) {
+			CreateMusicSourse ();
 		}
 
 		if (!musicEnabled)
 			return;
-
-		activeMusicSourceIndex = 1 - activeMusicSourceIndex;
-
-		musicSources [activeMusicSourceIndex].clip = clip;
-		musicSources [activeMusicSourceIndex].volume = masterVolumePercent * musicVolumePercent;
-		musicSources [activeMusicSourceIndex].Play ();
+        
+		musicSource .clip = clip;
+		musicSource.volume = masterVolumePercent * musicVolumePercent;
+		musicSource.Play ();
 	}
 
 	public void PlayMusic (string name)
@@ -134,26 +125,26 @@ public class AudioManager : SingletonResource<AudioManager> {
 
 		if (!musicEnabled)
 			return;
+               
+        if (TryGetComponent<MusicManager>(out MusicManager mm)) {
 
-		if (!GetComponent<MusicManager> ().playMusic)
-			return;
+            if (!mm.playMusic)
+                return;
 
-		if (name == "Shop") {
-			PlayMusic (GetComponent<MusicManager> ().shopTheme);
-		}
+            if (name == "Shop") {
+                PlayMusic(mm.shopTheme);
+            }
 
-		if (name == "Main") {
-			PlayMusic (GetComponent<MusicManager> ().mainTheme);
-		}
+            if (name == "Main") {
+                PlayMusic(mm.mainThemes[Random.Range(0, mm.mainThemes.Length)]);
+            }
+        }
 	}
 
 	public void StopMusic ()
 	{
-
-		for (int i = 0; i < musicSources.Length; i++) {
-			musicSources [i].Stop ();
-			musicSources [i].clip = null;
-		}
+		musicSource.Stop ();
+		musicSource.clip = null;
 	}
 
 	public void PlaySound (AudioClip clip, Vector3 pos)

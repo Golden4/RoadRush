@@ -7,15 +7,8 @@ public class LocationSelectScreen : MonoBehaviour {
 
 	public Location[] dialogBtns;
 
-	public Button backBtn;
-
 	void Start ()
 	{
-		backBtn.onClick.AddListener (() => {
-			KScreenManager.Instance.ShowScreen ("Shop");
-		});
-
-
 		UpdateDialogs ();
 
 	}

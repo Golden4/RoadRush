@@ -41,32 +41,32 @@ public class KMonoBehaviour : MonoBehaviour {
 		}
 	}
 
-	void Spawn ()
-	{
-		if (!isSpawned) {
+    void Spawn()
+    {
+        if (!isSpawned)
+        {
 
-			string name = base.GetType ().Name;
+            string name = base.GetType().Name;
 
-			if (!isInitilized) {
-				Debug.LogError (base.name + "." + name + " is not initilized.", null);
-			} else {
-				isSpawned = true;
+            if (isInitilized)
+            {
+                isSpawned = true;
+                
+                try
+                {
+                    this.OnSpawn();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.ToString());
 
-
-				try {
-					this.OnSpawn ();
-				} catch (Exception e) {
-
-					Debug.LogError (e.ToString ());
-
-				}
-			}
-
-
-
-
-		}
-	}
+                }
+            }else
+            {
+                Debug.LogError(base.name + "." + name + " is not initilized.", null);
+            }
+        }
+    }
 
 	public virtual void OnInit ()
 	{

@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent (typeof(Rigidbody))]
 
 public class PlayerCar : KMonoBehaviour {
-
+    public static PlayerCar Ins;
 	[Header ("Characteristics")]
 	public float acceleration = 3;
 	public float nitroAcceleration = .01f;
@@ -26,26 +26,29 @@ public class PlayerCar : KMonoBehaviour {
 	}
 
 	[Space (25)]
-	public float breakingIdle = .01f;
-	public float minSpeed = 30;
-	public bool isDead = false;
+    public float breakingIdle = .01f;
+    [System.NonSerialized]
+    public float minSpeed = 30;
+    [System.NonSerialized]
+    public bool isDead = false;
 
 	public float switchingGearTime = .5f;
-
-	public float highSpeedForBonus = 100;
-
+    [System.NonSerialized]
+    public float highSpeedForBonus = 100;
+    [System.NonSerialized]
 	public int lifeCount = 1;
-
-	public bool undying = false;
+    [System.NonSerialized]
+    public bool undying = false;
 
 	float nitroAmount = 1;
-
-	public bool usingNitro = false;
-
-	public float speed = 5;
-	int curGear = 0;
-
-	public bool startingCountDown = true;
+    [System.NonSerialized]
+    public bool usingNitro = false;
+    [System.NonSerialized]
+    public float speed = 5;
+    [System.NonSerialized]
+    public int curGear = 0;
+    [System.NonSerialized]
+    public bool startingCountDown = true;
 
 	public Vector2 input{ get; private set; }
 
@@ -60,9 +63,8 @@ public class PlayerCar : KMonoBehaviour {
 
 	Material[] materials;
 
-	public float Revs { get; private set; }
-
-	public override void OnSpawn ()
+    
+    public override void OnSpawn ()
 	{
 		foreach (Light item in GetComponentsInChildren<Light> ()) {
 			Destroy (item.gameObject);
@@ -70,18 +72,25 @@ public class PlayerCar : KMonoBehaviour {
 
 		InitAddScoreTrigger ();
 
-		SetDefaults ();
 
 		rb = GetComponent<Rigidbody> ();
 		materials = GetComponent<Renderer> ().materials;
-
+        
+		SetDefaults ();
 		CreateVisualMeshObject ();
 		InitSkidSmoke ();
 		InitNitro ();
 		InitGearShiftEffect ();
 		UpdateCarStats ();
+        Breaking();
+        SkidMarks();
+        UpdateInput();
+        CalcSpeed();
+        AnimateCar();
+        UpdateScore();
+        Nitro();
 
-		startingCountDown = true;
+        startingCountDown = true;
 
 	}
 
@@ -158,13 +167,12 @@ public class PlayerCar : KMonoBehaviour {
 
 	void Update ()
 	{
-		if (isDead || TimeManager.freezeTime)
+		if (isDead || TimeManager.freezeTime || startingCountDown)
 			return;
 		
 		Breaking ();
 		SkidMarks ();
 		UpdateInput ();
-		CalcSpeed ();
 		AnimateCar ();
 		UpdateScore ();
 		Nitro ();
@@ -177,7 +185,9 @@ public class PlayerCar : KMonoBehaviour {
 			return;
 
 		if (!isDead) {
-			ScoreController.Instance.distance += speed * Time.fixedDeltaTime / 10;
+            CalcSpeed();
+
+            ScoreController.Instance.distance += speed * Time.fixedDeltaTime / 10;
 			oldPos = transform.position;
 
 			if (ScoreController.Instance.averageSpeed < minSpeed)
@@ -252,33 +262,36 @@ public class PlayerCar : KMonoBehaviour {
 
 
 
-	void Move ()
-	{
+    void Move()
+    {
 
-		if (startingCountDown) {
+        if (startingCountDown) {
 
-			InputManager.disableInput = true;
+            InputManager.disableInput = true;
 
-			MoveToTargetPos (CameraController.Instance.centerRoadPos);
+            MoveToTargetPos(CameraController.Instance.centerRoadPos);
 
-			//return;
+            //return;
 
-		} else {
-			InputManager.disableInput = false;
-		}
+        } else {
+            InputManager.disableInput = false;
+        }
 
-		/*if (rb.velocity != Vector3.zero) {
+        /*if (rb.velocity != Vector3.zero) {
 			rb.velocity = Vector3.zero;
 		}*/
 
-		Vector3 pos = rb.position;
-		pos.x += speed / 4.5f * Time.fixedDeltaTime;
+        if (rb.velocity != Vector3.zero)
+            rb.velocity = Vector3.zero;
 
-		pos.z -= handling * Time.fixedDeltaTime * input.x;
+        Vector3 pos = rb.position;
+        pos.x += speed / 4.5f * Time.fixedDeltaTime;
 
-		pos.z = Mathf.Clamp (pos.z, -5, 5);
+        pos.z -= handling * Time.fixedDeltaTime * input.x;
 
-		rb.MovePosition (pos);
+        pos.z = Mathf.Clamp(pos.z, -5, 5);
+        
+        rb.MovePosition (pos);
 
 
 	}
@@ -319,18 +332,21 @@ public class PlayerCar : KMonoBehaviour {
 		}
 
 		if (!switchingGear) {
-			if (input.y > 0)
-				speed += (acceleration + gears [curGear].offsetAcceleration + ((usingNitro) ? nitroAcceleration : 0));
-			else if (input.y < 0) {
-				speed -= breaking;
-			}
-			speed -= breakingIdle;
+            if (input.y > 0)
+                speed += (acceleration + gears[curGear].offsetAcceleration + ((usingNitro) ? nitroAcceleration : 0)) * Time.fixedDeltaTime;
+            else if (input.y < 0)
+            {
+                speed -= breaking * Time.fixedDeltaTime;
+            }
+            else
+            {
+                speed -= breakingIdle * Time.fixedDeltaTime;
+            }
 		}
 
 		speed = Mathf.Clamp (speed, minSpeed, gears [gears.Length - 1].speedForSwitch);
 
 
-		CalculateRevs ();
 
 		if (ScoreController.Instance != null) {
 			ScoreController.Instance.CalculateHighSpeedInfo (speed, highSpeedForBonus);
@@ -338,45 +354,6 @@ public class PlayerCar : KMonoBehaviour {
 		}
 	}
 
-	float m_GearFactor;
-
-	void CalculateRevs ()
-	{
-
-		CalculateGearFactor ();
-
-		float prevGearSpeed = ((curGear > 0) ? gears [curGear - 1].speedForSwitch : minSpeed);
-
-		float revs = Mathf.InverseLerp (prevGearSpeed, gears [curGear].speedForSwitch, speed);
-
-		float gearNumFactor = prevGearSpeed / gears [gears.Length - 1].speedForSwitch;
-
-		var revsRangeMin = ULerp (0f, 1, CurveFactor (gearNumFactor));
-		var revsRangeMax = ULerp (1, 1f, gearNumFactor);
-
-		Revs = ULerp (revsRangeMin, revsRangeMax, m_GearFactor);
-	}
-
-	void CalculateGearFactor ()
-	{
-		float prevGearSpeed = ((curGear > 0) ? gears [curGear - 1].speedForSwitch : minSpeed);
-
-		float gearNumFactor = prevGearSpeed / gears [gears.Length - 1].speedForSwitch;
-
-		var targetGearFactor = Mathf.InverseLerp (prevGearSpeed, gears [curGear].speedForSwitch, speed);
-
-		m_GearFactor = Mathf.Lerp (m_GearFactor, targetGearFactor, Time.deltaTime * 5f);
-	}
-
-	float ULerp (float from, float to, float value)
-	{
-		return (1.0f - value) * from + value * to;
-	}
-
-	float CurveFactor (float factor)
-	{
-		return 1 - (1 - factor) * (1 - factor);
-	}
 
 	void SetDefaults ()
 	{
@@ -387,6 +364,7 @@ public class PlayerCar : KMonoBehaviour {
 		usingNitro = false;
 		canUseNitro = true;
 		switchingGear = false;
+        rb.velocity = Vector3.zero;
 	}
 
 	public void Respawn ()
@@ -572,10 +550,15 @@ public class PlayerCar : KMonoBehaviour {
 		yAngle = Mathf.Lerp (yAngle, targetInput, Time.deltaTime * 7);
 
 		angles.z += 4f * yAngle;
+        
+        if ((rb.position.z > 4.9 && input.x < 0) || (rb.position.z < -4.9 && input.x > 0))
+        {
+            input = new Vector2(0, input.y);
+        }
 
-		angles += Vector3.up * 3 * input.x + Vector3.right * 2 * input.x;
-		
-		mesh.transform.eulerAngles = angles;
+        angles += Vector3.up * 3 * input.x + Vector3.right * 2 * input.x;
+
+        mesh.transform.eulerAngles = angles;
 
 	}
 
@@ -688,158 +671,165 @@ public class PlayerCar : KMonoBehaviour {
 		}
 	}
 
-	//	[Header ("Jump")]
-	//	public float targetJumpingDistance;
-	//	public float flyingTime = 1;
-	//	public float jumpPower = 3;
-	//
-	//
-	//	public float distanceBetweenRoad = 3f;
-	//
-	//	public enum PlayerState
-	//	{
-	//		Moving,
-	//		Jumping,
-	//		Switching
-	//	}
-	//
-	//	public enum PlayerPos
-	//	{
-	//		Bottom,
-	//		Center,
-	//		Top
-	//	}
-	//
-	//	public PlayerState curState = PlayerState.Moving;
-	//	public PlayerPos curPlayerPos;
-	//
-	//	Vector3 startJumpingPos;
-	//
-	//
-	//	void Start ()
-	//	{
-	//		startJumpingPos = transform.position;
-	//	}
-	//
-	//	float t = 0;
-	//
-	//	void Update ()
-	//	{
-	//		if (Input.GetKeyDown (KeyCode.Space) && curState != PlayerState.Jumping) {
-	//			SetJumpingState ();
-	//		}
-	//
-	//	}
-	//
-	//	void FixedUpdate ()
-	//	{
-	//
-	//		Move ();
-	//		if (curState == PlayerState.Jumping && !movingUpDown) {
-	//			Jump ();
-	//			return;
-	//		}
-	//
-	//		int curStateIndex = (int)curPlayerPos;
-	//
-	//		if (Input.GetKeyDown (KeyCode.S)) {
-	//
-	//			if (curStateIndex-- > 0 /*&& curState != PlayerState.Switching*/) {
-	//				SetPosPlayer (curStateIndex--);
-	//				print ("MoveUp");
-	//			}
-	//		} else if (Input.GetKeyDown (KeyCode.W)) {
-	//
-	//			if (System.Enum.GetNames (typeof(PlayerPos)).Length - 1 > curStateIndex++ /*&& curState != PlayerState.Switching*/) {
-	//				SetPosPlayer (curStateIndex++);
-	//				print ("MoveDown");
-	//			}
-	//		}
-	//	}
-	//
-	//
-	//
-	//	void Jump ()
-	//	{
-	//		t += Time.fixedDeltaTime * movingSpeed / targetJumpingDistance;
-	//
-	//		if (t < 1) {
-	//
-	//			Vector3 lerpVector = transform.position;
-	//
-	//			//lerpVector.x = Mathf.Lerp (startJumpingPos.x, startJumpingPos.x + targetJumpingDistance, t);
-	//
-	//			lerpVector.y = startJumpingPos.y + Mathf.Sin (Mathf.PI * t) * jumpPower;
-	//
-	//			transform.position = lerpVector;
-	//		} else {
-	//			transform.position = startJumpingPos + Vector3.right * targetJumpingDistance;
-	//			SetMovingState ();
-	//		}
-	//	}
-	//
+    public override void OnInit()
+    {
+        base.OnInit();
 
-	//
-	//	void SetJumpingState ()
-	//	{
-	//		curState = PlayerState.Jumping;
-	//		t = 0;
-	//		startJumpingPos.x = transform.position.x;
-	//		startJumpingPos.z = transform.position.z;
-	//	}
-	//
-	//	void SetJumpingState (float targetJumpPosOffset, float flyingTime, float jumpPower)
-	//	{
-	//		curState = PlayerState.Jumping;
-	//		t = 0;
-	//		this.flyingTime = flyingTime;
-	//		this.targetJumpingDistance = targetJumpPosOffset;
-	//		this.jumpPower = jumpPower;
-	//		startJumpingPos.x = transform.position.x;
-	//		startJumpingPos.z = transform.position.z;
-	//	}
-	//
-	//	void SetMovingState ()
-	//	{
-	//		curState = PlayerState.Moving;
-	//	}
-	//
-	//
-	//
-	//	void SetPosPlayer (int indexOfEnum)
-	//	{
-	//		curState = PlayerState.Switching;
-	//
-	//		StartCoroutine (MoveUpDownCoroutine ((int)curPlayerPos, (int)indexOfEnum));
-	//
-	//		curPlayerPos = (PlayerPos)indexOfEnum;
-	//
-	//
-	//	}
-	//
-	//	bool movingUpDown = false;
-	//
-	//	IEnumerator MoveUpDownCoroutine (int startRoadIndex, int endRoadIndex)
-	//	{
-	//		movingUpDown = true;
-	//		float f = 0;
-	//
-	//		while (f < 1) {
-	//
-	//			f += Time.fixedDeltaTime / movingUpDownTime;
-	//
-	//			float posZ = Mathf.Lerp ((startRoadIndex - 1) * distanceBetweenRoad, (endRoadIndex - 1) * distanceBetweenRoad, f);
-	//
-	//			Vector3 pos = transform.position;
-	//			pos.z = posZ;
-	//
-	//			transform.position = pos;
-	//
-	//			yield return new WaitForFixedUpdate ();
-	//		}
-	//		movingUpDown = false;
-	//		curState = PlayerState.Moving;
-	//	}
+        Ins = this;
+    }
+
+    //	[Header ("Jump")]
+    //	public float targetJumpingDistance;
+    //	public float flyingTime = 1;
+    //	public float jumpPower = 3;
+    //
+    //
+    //	public float distanceBetweenRoad = 3f;
+    //
+    //	public enum PlayerState
+    //	{
+    //		Moving,
+    //		Jumping,
+    //		Switching
+    //	}
+    //
+    //	public enum PlayerPos
+    //	{
+    //		Bottom,
+    //		Center,
+    //		Top
+    //	}
+    //
+    //	public PlayerState curState = PlayerState.Moving;
+    //	public PlayerPos curPlayerPos;
+    //
+    //	Vector3 startJumpingPos;
+    //
+    //
+    //	void Start ()
+    //	{
+    //		startJumpingPos = transform.position;
+    //	}
+    //
+    //	float t = 0;
+    //
+    //	void Update ()
+    //	{
+    //		if (Input.GetKeyDown (KeyCode.Space) && curState != PlayerState.Jumping) {
+    //			SetJumpingState ();
+    //		}
+    //
+    //	}
+    //
+    //	void FixedUpdate ()
+    //	{
+    //
+    //		Move ();
+    //		if (curState == PlayerState.Jumping && !movingUpDown) {
+    //			Jump ();
+    //			return;
+    //		}
+    //
+    //		int curStateIndex = (int)curPlayerPos;
+    //
+    //		if (Input.GetKeyDown (KeyCode.S)) {
+    //
+    //			if (curStateIndex-- > 0 /*&& curState != PlayerState.Switching*/) {
+    //				SetPosPlayer (curStateIndex--);
+    //				print ("MoveUp");
+    //			}
+    //		} else if (Input.GetKeyDown (KeyCode.W)) {
+    //
+    //			if (System.Enum.GetNames (typeof(PlayerPos)).Length - 1 > curStateIndex++ /*&& curState != PlayerState.Switching*/) {
+    //				SetPosPlayer (curStateIndex++);
+    //				print ("MoveDown");
+    //			}
+    //		}
+    //	}
+    //
+    //
+    //
+    //	void Jump ()
+    //	{
+    //		t += Time.fixedDeltaTime * movingSpeed / targetJumpingDistance;
+    //
+    //		if (t < 1) {
+    //
+    //			Vector3 lerpVector = transform.position;
+    //
+    //			//lerpVector.x = Mathf.Lerp (startJumpingPos.x, startJumpingPos.x + targetJumpingDistance, t);
+    //
+    //			lerpVector.y = startJumpingPos.y + Mathf.Sin (Mathf.PI * t) * jumpPower;
+    //
+    //			transform.position = lerpVector;
+    //		} else {
+    //			transform.position = startJumpingPos + Vector3.right * targetJumpingDistance;
+    //			SetMovingState ();
+    //		}
+    //	}
+    //
+
+    //
+    //	void SetJumpingState ()
+    //	{
+    //		curState = PlayerState.Jumping;
+    //		t = 0;
+    //		startJumpingPos.x = transform.position.x;
+    //		startJumpingPos.z = transform.position.z;
+    //	}
+    //
+    //	void SetJumpingState (float targetJumpPosOffset, float flyingTime, float jumpPower)
+    //	{
+    //		curState = PlayerState.Jumping;
+    //		t = 0;
+    //		this.flyingTime = flyingTime;
+    //		this.targetJumpingDistance = targetJumpPosOffset;
+    //		this.jumpPower = jumpPower;
+    //		startJumpingPos.x = transform.position.x;
+    //		startJumpingPos.z = transform.position.z;
+    //	}
+    //
+    //	void SetMovingState ()
+    //	{
+    //		curState = PlayerState.Moving;
+    //	}
+    //
+    //
+    //
+    //	void SetPosPlayer (int indexOfEnum)
+    //	{
+    //		curState = PlayerState.Switching;
+    //
+    //		StartCoroutine (MoveUpDownCoroutine ((int)curPlayerPos, (int)indexOfEnum));
+    //
+    //		curPlayerPos = (PlayerPos)indexOfEnum;
+    //
+    //
+    //	}
+    //
+    //	bool movingUpDown = false;
+    //
+    //	IEnumerator MoveUpDownCoroutine (int startRoadIndex, int endRoadIndex)
+    //	{
+    //		movingUpDown = true;
+    //		float f = 0;
+    //
+    //		while (f < 1) {
+    //
+    //			f += Time.fixedDeltaTime / movingUpDownTime;
+    //
+    //			float posZ = Mathf.Lerp ((startRoadIndex - 1) * distanceBetweenRoad, (endRoadIndex - 1) * distanceBetweenRoad, f);
+    //
+    //			Vector3 pos = transform.position;
+    //			pos.z = posZ;
+    //
+    //			transform.position = pos;
+    //
+    //			yield return new WaitForFixedUpdate ();
+    //		}
+    //		movingUpDown = false;
+    //		curState = PlayerState.Moving;
+    //	}
 }
 
 [System.Serializable]

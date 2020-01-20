@@ -57,12 +57,11 @@ public class CameraShopController : MonoBehaviour {
 		}
 
 
-		if (clicked) {
+		if (clicked && KScreenManager.Instance.curScreen == "Shop") {
 			velocityForceX += multiplyX;
 			velocityForceY += multiplyY;
 
 			dragging = true;
-
 		}
 		else {
 			dragging = false;

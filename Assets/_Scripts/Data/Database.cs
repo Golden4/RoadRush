@@ -49,8 +49,7 @@ public class Database {
 		//PlayerPrefs.DeleteAll ();
 
 		PlayerData.playerStats = new CarStats[PlayerData.playerCarData.Length];
-
-
+        
 		bool hasLoad = true;
 
 		for (int i = 0; i < PlayerData.playerCarData.Length; i++) {

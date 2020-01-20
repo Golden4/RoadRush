@@ -34,21 +34,7 @@ public class ShopController : MonoBehaviour {
 		EventManager.OnMoneyChangedEvent -= ChangeMoney;
 		EventManager.OnRubyChangedEvent -= ChangeRuby;
 	}
-
-	void ChangeMoney (int startMoney, int finalMoney)
-	{
-		for (int i = 0; i < moneyCount.Length; i++) {
-			moneyCount [i].AnimateValue (this, startMoney, finalMoney, .5f);
-		}
-	}
-
-	void ChangeRuby (int startRuby, int finalRuby)
-	{
-		for (int i = 0; i < rubyCount.Length; i++) {
-			rubyCount [i].AnimateValue (this, startRuby, finalRuby, .5f);
-		}
-	}
-
+    
 	void Start ()
 	{
 		SpawnCars ();
@@ -71,11 +57,26 @@ public class ShopController : MonoBehaviour {
 			Database.PlayerData.curCarIndex = curCarIndex;
 
 		});
-
-
 	}
 
-	void SpawnCars ()
+
+    void ChangeMoney(int startMoney, int finalMoney)
+    {
+        for (int i = 0; i < moneyCount.Length; i++)
+        {
+            moneyCount[i].AnimateValue(this, startMoney, finalMoney, .5f);
+        }
+    }
+
+    void ChangeRuby(int startRuby, int finalRuby)
+    {
+        for (int i = 0; i < rubyCount.Length; i++)
+        {
+            rubyCount[i].AnimateValue(this, startRuby, finalRuby, .5f);
+        }
+    }
+
+    void SpawnCars ()
 	{
 		cars = new GameObject[Database.PlayerData.playerCarData.Length];
 
@@ -286,7 +287,6 @@ public class ShopController : MonoBehaviour {
 		if (GetBoostLevel (carStat) == maxBoostLevel)
 			return;
 		
-		print ("Upgradecar " + carStat + "    " + stats);
 
 		switch (carStat) {
 		case CarStatInfos.MaxSpeed:
@@ -347,23 +347,21 @@ public class ShopController : MonoBehaviour {
 		switch (carStat) {
 		case CarStatInfos.MaxSpeed:
 			return Database.PlayerData.playerStats [curCarIndex].boostLvlMaxSpeed;
-
-			break;
 		case CarStatInfos.Acceleration:
 			return Database.PlayerData.playerStats [curCarIndex].boostLvlAcceleration;
-			break;
+
 		case CarStatInfos.Handling:
 			return Database.PlayerData.playerStats [curCarIndex].boostLvlHandling;
-			break;
+
 		case CarStatInfos.Breaking:
 			return Database.PlayerData.playerStats [curCarIndex].boostLvlBreaking;
-			break;
+
 		case CarStatInfos.Nitro:
 			return Database.PlayerData.playerStats [curCarIndex].boostLvlNitro;
-			break;
+
 		case CarStatInfos.Durability:
 			return Database.PlayerData.playerStats [curCarIndex].boostLvlDurability;
-			break;
+
 		}
 
 		return -1;
@@ -389,7 +387,8 @@ public class ShopController : MonoBehaviour {
 	}
 
 
-	public enum CarStatInfos {
+	public enum CarStatInfos
+	{
 		MaxSpeed,
 		Acceleration,
 		Handling,
