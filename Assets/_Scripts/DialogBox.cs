@@ -23,7 +23,7 @@ public class DialogBox : MonoBehaviour {
 		instance.anim = instance.GetComponentInChildren<GUIAnim> ();
 	}
 
-	public static void Show (string title, string text, Action onClickOk, Action onClickCancel = null)
+	public static void Show (string title, string text, Action onClickOk, Action onClickCancel = null, bool showCancel = true)
 	{
 		if (instance == null)
 			Init ();
@@ -50,8 +50,11 @@ public class DialogBox : MonoBehaviour {
 			Hide ();
 		});
 
-	}
+        instance.cancelBtn.gameObject.SetActive(showCancel);
+        
 
+	}
+    
 	static void Hide ()
 	{
 		instance.anim.MoveOut (GUIAnimSystem.eGUIMove.SelfAndChildren);

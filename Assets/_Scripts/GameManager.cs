@@ -164,6 +164,8 @@ public class GameManager : MonoBehaviour {
             ruby = 1000;
             money = 1000000;
         }
+
+        PurchaseManager.Ins.TryInit();
     }
 
 	void OnApplicationPause ()
@@ -227,10 +229,18 @@ public class GameManager : MonoBehaviour {
 		money += addMoney;
 
 		EventManager.OnMoneyChangedCall (startMoney, money);
-
 	}
 
-	public static int NeedXPforNextLevel (int level)
+    public static void AddRuby(int addRuby)
+    {
+        int startRuby = ruby;
+
+        ruby += addRuby;
+
+        EventManager.OnRubyChangedCall(startRuby, ruby);
+    }
+
+    public static int NeedXPforNextLevel (int level)
 	{
 		return Mathf.Clamp (level, 0, int.MaxValue) * 30;
 	}

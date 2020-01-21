@@ -75,9 +75,7 @@ public class ScreenFader : MonoBehaviour {
 		float lastTime = Time.unscaledTime;
 
 		while ((async.progress < .89f  && !async.isDone) || lastTime + .3f >= Time.unscaledTime) {
-            Debug.Log(async.isDone + "  " + async.progress);
 			yield return null;
-
 		}
 
 		async.allowSceneActivation = true;

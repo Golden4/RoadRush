@@ -12,7 +12,7 @@ public class GiftController : MonoBehaviour {
 
 	public DateTime nextGiveGiftTime;
 
-	int money = 5000;
+	int money = 2500;
 
 	void Start ()
 	{
@@ -32,7 +32,7 @@ public class GiftController : MonoBehaviour {
 	{
 		if (CanTakeGift ()) {
 
-			nextGiveGiftTime = DateTime.Now.AddMinutes (10);
+			nextGiveGiftTime = DateTime.Now.AddMinutes (15);
 
 			PlayerPrefs.SetString ("giftTime", nextGiveGiftTime.Ticks.ToString ());
 

@@ -226,7 +226,6 @@ public class PlayerCar : KMonoBehaviour {
 		if (speed == minSpeed) {
 			input = new Vector2 (input.x, Mathf.Clamp (input.y, 0f, 1f));
 		}
-        Debug.Log(handling);
 	}
 
 	void UpdateCarStats ()

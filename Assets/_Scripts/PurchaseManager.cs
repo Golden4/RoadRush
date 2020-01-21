@@ -62,7 +62,7 @@ public class PurchaseManager : SingletonResourse<PurchaseManager>, IStoreListene
     {
         NC_PRODUCTS = new string[] { "no_ads" };
         
-        C_PRODUCTS = new string[] { "coins_1", "coins_2", "coins_3" };
+        C_PRODUCTS = new string[] { "dollars_1", "dollars_2", "dollars_3", "ruby_1", "ruby_2", "ruby_3" };
         
         var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
