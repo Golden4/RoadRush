@@ -93,6 +93,10 @@
       "value": "Desert"
     },
     {
+      "key": "snowy",
+      "value": "Snowy"
+    },
+    {
       "key": "high_speed",
       "value": "High speed"
     },

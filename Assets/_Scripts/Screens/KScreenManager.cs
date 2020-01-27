@@ -78,9 +78,7 @@ public class KScreenManager : MonoBehaviour {
 			fader.MoveIn (GUIAnimSystem.eGUIMove.Self);
 			fader.MoveOut (GUIAnimSystem.eGUIMove.Self);
 		}
-
-		Debug.Log ("ShowedScreen" + index);
-
+        
 		for (int i = 0; i < dialogs.Length; i++) {
 			
 			if (i == index)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class ScreenFader : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class ScreenFader : MonoBehaviour {
 
 	static ScreenFader Instance;
 
+    public Transform ray;
 
 	void Start ()
 	{
@@ -18,14 +20,21 @@ public class ScreenFader : MonoBehaviour {
 		DontDestroyOnLoad (this);
 
 		fadeScreen.gameObject.GetComponent<Image> ().enabled = true;
-		//fadeScreen.gameObject.GetComponentInChildren<Text> ().enabled = true;
 
+        if (!DOTween.IsTweening(ray.transform))
+            ray.transform.DORotate(new Vector3(0, 0, 360), .3f).SetLoops(-1, LoopType.Incremental);
 
-	}
+        //fadeScreen.gameObject.GetComponentInChildren<Text> ().enabled = true;
+    }
 
-	#if UNITY_EDITOR
+    private void Update()
+    {
+       
+    }
 
-	void OnApplicationQuit ()
+#if UNITY_EDITOR
+
+    void OnApplicationQuit ()
 	{
 		Database.SaveAll ();
 	}
@@ -71,22 +80,24 @@ public class ScreenFader : MonoBehaviour {
 
 		AsyncOperation async = SceneManager.LoadSceneAsync (sceneName, LoadSceneMode.Single);
 		async.allowSceneActivation = false;
+        async.completed += Async_completed;
 
-		float lastTime = Time.unscaledTime;
+        float lastTime = Time.unscaledTime;
 
 		while ((async.progress < .89f  && !async.isDone) || lastTime + .3f >= Time.unscaledTime) {
 			yield return null;
 		}
 
 		async.allowSceneActivation = true;
-
-
+        
 		yield return null;
-
-		fadeScreen.MoveOut (GUIAnimSystem.eGUIMove.SelfAndChildren);
-
+        
 		sceneLoading = false;
 
 	}
 
+    private void Async_completed(AsyncOperation obj)
+    {
+        fadeScreen.MoveOut(GUIAnimSystem.eGUIMove.SelfAndChildren);
+    }
 }

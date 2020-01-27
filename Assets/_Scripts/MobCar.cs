@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MobCar : MonoBehaviour {
 
-	public float CarSpeed = 20;
+	public float сarSpeed = 20;
 	public int curLine;
 	bool isDead = false;
     Rigidbody rb;
@@ -23,8 +23,13 @@ public class MobCar : MonoBehaviour {
 	};
 
 	Renderer mmmat;
+    
+    bool IsVisible()
+    {
+        return MobCarsController.Instance.GetCurPlayerPosition() + MobCarsController.Instance.visibleOffset >= transform.position.x;
+    }
 
-	void Awake ()
+    void Awake ()
 	{
 		mmmat = GetComponent<Renderer> ();
 
@@ -60,10 +65,9 @@ public class MobCar : MonoBehaviour {
         //AddToReuseBefore();
         //}
 
-        //CheckCarSides ();
+        CheckCarSides ();
 
         if (CameraController.Instance.centerRoadPos.x > transform.position.x + 10) {
-			MobCarsController.Instance.SpawnMob (curLine);
 			MobCarsController.Instance.AddToReuse (this, curLine);
 		}
 	}
@@ -76,13 +80,13 @@ public class MobCar : MonoBehaviour {
 		if (forwardMob == null) {
 			if (Physics.Raycast (transform.position + Vector3.right * 1.5f + Vector3.up * .5f, Vector3.right, out hit, 5)) {
 				if (hit.transform.CompareTag ("Mob")) {
-					CarSpeed = hit.transform.GetComponent<MobCar> ().CarSpeed;
+					сarSpeed = hit.transform.GetComponent<MobCar> ().сarSpeed;
 					forwardMob = hit.transform;
-					print (forwardMob);
 				}
 			}
 		}
-/*
+
+        /*
 		if (MobCarsController.Instance.roadLineInfo [curLine - 1].dir == moveDir)
 		if (Physics.Raycast (transform.position + Vector3.right + Vector3.up * .5f + Vector3.forward, Vector3.forward, out hit, 2)) {
 			if (hit.transform.CompareTag ("Mob") && CarSpeed == hit.transform.GetComponent<MobCar> ().CarSpeed) {
@@ -98,17 +102,31 @@ public class MobCar : MonoBehaviour {
 		}*/
 
 		#if UNITY_EDITOR
-		Debug.DrawRay (transform.position + Vector3.right * 1.5f + Vector3.up * .5f, Vector3.right * 5);
-		Debug.DrawRay (transform.position + Vector3.right + Vector3.up * .5f + Vector3.forward, Vector3.forward * 2, Color.green);
-		Debug.DrawRay (transform.position + Vector3.right + Vector3.up * .5f - Vector3.forward, -Vector3.forward * 2, Color.green);
+		Debug.DrawRay (transform.position + Vector3.right * 1.5f + Vector3.up * .5f, Vector3.right * 5, Color.green);
+		Debug.DrawRay (transform.position + Vector3.right + Vector3.up + Vector3.forward, Vector3.forward * 2, Color.green);
+		Debug.DrawRay (transform.position + Vector3.right + Vector3.up - Vector3.forward, -Vector3.forward * 2, Color.green);
 		#endif
 	}
+
+    public void SetDirection(MoveDir moveDir)
+    {
+        if (moveDir == MoveDir.back)
+        {
+            transform.eulerAngles = Vector3.up * 180;
+            moveDir = MoveDir.back;
+        }
+        else
+        {
+            transform.eulerAngles = Vector3.zero;
+            moveDir = MoveDir.forward;
+        }
+    }
 
 	void FixedUpdate ()
 	{
 		if (isDead)
 			Break ();
-		else
+		else if(IsVisible())
 		    Move ();
 	}
 
@@ -117,14 +135,14 @@ public class MobCar : MonoBehaviour {
         if (!rb)
             return;
 		Vector3 pos = rb.position;
-		pos.x += CarSpeed * Time.fixedDeltaTime * ((moveDir == MoveDir.back) ? -1 : 1);
+		pos.x += сarSpeed * Time.fixedDeltaTime * ((moveDir == MoveDir.back) ? -1 : 1);
         rb.position = pos;
 	}
 
 	void Break ()
 	{
-		CarSpeed -= Time.fixedDeltaTime * 3;
-		CarSpeed = Mathf.Clamp (CarSpeed, 0, float.MaxValue);
+		сarSpeed -= Time.fixedDeltaTime * 3;
+		сarSpeed = Mathf.Clamp (сarSpeed, 0, float.MaxValue);
 	}
 
 	float collisionTime;
@@ -139,11 +157,16 @@ public class MobCar : MonoBehaviour {
 
 	void CollideWithPlayer ()
 	{
-		isDead = true;
-		//GetComponent<BoxCollider> ().enabled = false;
-		Invoke ("AddToReuseBefore", 1);
+        Die();
+        //GetComponent<BoxCollider> ().enabled = false;
+        Invoke ("AddToReuseBefore", 1);
 
 	}
+
+    void Die()
+    {
+        isDead = true;
+    }
 
 	IEnumerator DeadCoroutine (Collision col)
 	{
@@ -153,7 +176,7 @@ public class MobCar : MonoBehaviour {
 
 		Vector3 force = -dir * col.gameObject.GetComponent<PlayerCar> ().speed / 15;
 
-		Rigidbody rb = gameObject.AddComponent<Rigidbody> ();
+		Rigidbody rb = gameObject.GetComponent<Rigidbody> ();
 
 		rb.AddRelativeForce (force, ForceMode.Impulse);*/
 	}
@@ -162,11 +185,8 @@ public class MobCar : MonoBehaviour {
 	{
 		GetComponent<BoxCollider> ().enabled = true;
 		isDead = false;
-		MobCarsController.Instance.SpawnMob (curLine);
 		MobCarsController.Instance.AddToReuse (this, curLine);
-
-		if (gameObject.GetComponent<Rigidbody> ())
-			Destroy (gameObject.GetComponent<Rigidbody> ());
+        
 	}
 
     private void OnDestroy()

@@ -115,7 +115,15 @@
     <Compile Include="Assets\_Scripts\SingletonResourse.cs" />
     <Compile Include="Assets\_Scripts\SkidMark.cs" />
     <Compile Include="Assets\_Scripts\TimeManager.cs" />
+    <Compile Include="Assets\_Scripts\UI\ButtonCustom.cs" />
     <Compile Include="Assets\_Scripts\Utility.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Resources\MirrorReflection.cs" />
     <Compile Include="Assets\Simple Mesh Combine\Scripts\SimpleMeshCombine.cs" />
     <Compile Include="Assets\VoxelImporter\Examples\Assets\CreateCubes.cs" />
@@ -158,6 +166,7 @@
     <None Include="Assets\VoxelImporter\ReadMe_en.txt" />
     <None Include="Assets\VoxelImporter\Shader\Explosion\VoxelExplosion-Opaque.shader" />
     <None Include="Assets\Resources\Shaders\MirrorReflection.shader" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\Resources\Shaders\TransperentShader.shader" />
     <None Include="Assets\VoxelImporter\ReadMe_jp.txt" />
     <Reference Include="Unity.Timeline.Editor">
@@ -360,6 +369,9 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>D:/Programs/2019.2.18f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>D:/GameDev/RoadRush/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="GETween">
       <HintPath>D:/GameDev/RoadRush/Assets/Plugins/GETween.dll</HintPath>

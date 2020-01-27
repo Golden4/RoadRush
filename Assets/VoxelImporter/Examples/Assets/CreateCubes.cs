@@ -26,6 +26,7 @@ namespace VoxelImporter
                 var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 go.name = string.Format("{0} : ({1}, {2}, {3})", i, voxelStructure.voxels[i].x, voxelStructure.voxels[i].y, voxelStructure.voxels[i].z);
                 go.transform.localPosition = voxelStructure.voxels[i].position;
+
                 go.transform.SetParent(transform);
                 {
                     var renderer = go.GetComponent<Renderer>();

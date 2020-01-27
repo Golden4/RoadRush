@@ -10,7 +10,6 @@ public class LocationSelectScreen : MonoBehaviour {
 	void Start ()
 	{
 		UpdateDialogs ();
-
 	}
 
 	void BuyLocation (int index)

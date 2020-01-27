@@ -127,6 +127,7 @@ public class CarAudio : MonoBehaviour {
 
             // The pitch is interpolated between the min and max values, according to the car's revs.
             float pitch = ULerp (lowPitchMin, lowPitchMax, Revs);
+            
 
 			// clamp to minimum pitch (note, not clamped to max for high revs while burning out)
 			pitch = Mathf.Min (lowPitchMax, pitch);

@@ -13,8 +13,7 @@ public class CameraController : SingletonGeneric<CameraController> {
 
 	bool _curCameraPosIndexLoaded = false;
 	int _curCameraPosIndex = 0;
-
-
+    
 	public int CurCameraPosIndex {
 		get {
 			if (!_curCameraPosIndexLoaded) {
@@ -48,15 +47,12 @@ public class CameraController : SingletonGeneric<CameraController> {
 
 	void Start ()
 	{
-
-		target = FindObjectOfType<PlayerCar> ();
+        target = PlayerCar.Ins;
 
 		ChangeCamera (CurCameraPosIndex);
 
 		UpdateRoadCenter ();
-
-		transform.position = target.transform.position.x * Vector3.right + offset + Vector3.right * 10;
-
+        
 	}
 
 	/*	void Update ()
@@ -75,7 +71,7 @@ public class CameraController : SingletonGeneric<CameraController> {
 	Vector3 velocity;
 	float nitroSpeed;
 
-	void FixedUpdate ()
+	public void UpdateCameraPos ()
 	{
 
 		if (TimeManager.freezeTime)
@@ -84,8 +80,11 @@ public class CameraController : SingletonGeneric<CameraController> {
 		float targetSpeed = (target.usingNitro) ? 2.5f : 1;
 
 		nitroSpeed = Mathf.Lerp (nitroSpeed, targetSpeed, Time.fixedDeltaTime * 2);
-
-		if (!target.isDead && !target.startingCountDown) {
+        
+        if (cameraPositions[CurCameraPosIndex].clampToTarget)
+        {
+            transform.position = target.transform.position + offset;
+        } else if (!target.isDead && !target.startingCountDown) {
 			transform.position = Vector3.SmoothDamp (transform.position, target.transform.position.x * Vector3.right + offset, ref velocity, Time.fixedDeltaTime * nitroSpeed);
 		} else {
 			transform.position = Vector3.MoveTowards (transform.position, transform.position + Vector3.right * 50, Time.fixedDeltaTime * ((target.isDead) ? 14 : 6));
@@ -97,11 +96,14 @@ public class CameraController : SingletonGeneric<CameraController> {
 
 	void ChangeCamera (int index)
 	{
-		offset = cameraPositions [index].pos;
-		transform.eulerAngles = cameraPositions [index].rot;
-		transform.position = target.transform.position.x * Vector3.right + cameraPositions [index].pos;
 		Camera.main.fieldOfView = cameraPositions [index].fieldOfView;
-	}
+        offset = cameraPositions[index].pos;
+
+        transform.position = target.transform.position.x * Vector3.right + cameraPositions[index].pos;
+
+        transform.eulerAngles = cameraPositions[index].rot;
+
+    }
 
 	public void ChangeCameraNext ()
 	{
@@ -139,5 +141,6 @@ public class CameraController : SingletonGeneric<CameraController> {
 		public Vector3 pos;
 		public Vector3 rot;
 		public int fieldOfView = 40;
+        public bool clampToTarget;
 	}
 }

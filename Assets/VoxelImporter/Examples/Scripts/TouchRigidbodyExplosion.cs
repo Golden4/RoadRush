@@ -6,7 +6,7 @@ namespace VoxelImporter
 {
 	public class TouchRigidbodyExplosion : MonoBehaviour
 	{
-        public float radius = 10f;
+        public float radius = 3f;
         public float power = 500f;
 
         void Update()

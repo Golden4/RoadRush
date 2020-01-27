@@ -7,9 +7,25 @@ public class MobCarsController : SingletonGeneric<MobCarsController> {
 	public MobCar[] mobPrefabs;
 
 	public RoadLineInfo[] roadLineInfo = new RoadLineInfo[4];
-	public int carsInOneLine = 4;
 
-	Transform mobHolder;
+    public enum TraficLevel
+    {
+        Low,
+        Medium,
+        High
+    }
+
+    public TraficLevel traficLevel;
+
+
+    public int carsInOneLine = 4;
+    
+    public float visibleOffset = 50;
+    float spawnLineOffset = 100;
+    float maxForwardOffsetFromTarget = 150;
+    float maxBackwardOffset = -25;
+
+    Transform mobHolder;
 
 	void Start ()
 	{
@@ -23,12 +39,26 @@ public class MobCarsController : SingletonGeneric<MobCarsController> {
 			roadLineInfo [1].dir = MoveDir.back;
 		}
 
-		CreateMobsPool ();
+        carsInOneLine = 4 + (int) traficLevel;
 
-		SpawnMobs ();
+
+        CreateMobsPool ();
+
+        StartCoroutine(ModSpawner());
+
+		//SpawnMobs ();
 	}
 
-	/*	void SpawnMobsOnce ()
+    public float GetCurPlayerPosition()
+    {
+        if (PlayerCar.Ins != null)
+            return PlayerCar.Ins.transform.position.x;
+        else
+            return 0;
+    }
+    
+
+    /*	void SpawnMobsOnce ()
 	{
 		int randMobIndex = Random.Range (0, mobPrefabs.Length);
 
@@ -62,7 +92,7 @@ public class MobCarsController : SingletonGeneric<MobCarsController> {
 
 	}*/
 
-	bool[] firstSpawn = new bool[4];
+    bool[] firstSpawn = new bool[4];
 
 	void SpawnMobs ()
 	{
@@ -71,36 +101,87 @@ public class MobCarsController : SingletonGeneric<MobCarsController> {
 			for (int j = 0; j < carsInOneLine; j++) {
 				SpawnMob (i);
 			}
-
 		}
 	}
 
-	public void SpawnMob (int line)
+    float GetRandomNextSpawnTime()
+    {
+        Vector2 clampTime = Vector2.zero;
+
+        switch (traficLevel)
+        {
+            case TraficLevel.Low:
+                clampTime = new Vector2(.2f, 4f);
+                break;
+            case TraficLevel.Medium:
+
+                clampTime = new Vector2(.1f, 4f);
+                break;
+            case TraficLevel.High:
+                clampTime = new Vector2(.05f, 3f);
+                break;
+            default:
+                break;
+        }
+        
+        return Random.Range(clampTime.x, clampTime.y);
+    }
+
+    IEnumerator ModSpawner()
+    {
+        while (true)
+        {
+            int lineIndex = Random.Range(0, 4);
+
+            MobCar go = GetRandCarFromPool();
+
+            if (go != null)
+            {
+                Vector3 pos = Vector3.up * .5f;
+
+                pos.z = roadLineInfo[lineIndex].roadCenterPos;
+
+                pos.x = GetCurPlayerPosition() + spawnLineOffset;
+
+                go.transform.position = pos;
+
+                go.SetDirection(roadLineInfo[lineIndex].dir);
+
+                roadLineInfo[lineIndex].carsInLine.Add(go);
+            }
+
+
+            yield return new WaitForSeconds(GetRandomNextSpawnTime() * (30 / PlayerCar.Ins.speed));
+        }
+    }
+
+
+    public void SpawnMob (int line)
 	{
 		int index = Random.Range (0, mobPrefabs.Length);
 
 		MobCar go = GetRandCarFromPool ();
 		go.curLine = line;
 
-		if (roadLineInfo [line].lastCar == null && !firstSpawn [line]) {
+		if (roadLineInfo [line].GetLastCar() == null && !firstSpawn [line]) {
+
 			firstSpawn [line] = true;
 			Vector3 pos = Vector3.up * .5f;
 
 			pos.z = roadLineInfo [line].roadCenterPos;
-			pos.x = Random.Range (roadLineInfo [line].distance.x + 30, roadLineInfo [line].distance.y + 30);
-			go.transform.position = pos;
+            
+            pos.x = GetRandomNextSpawnTime();
 
-			ChooseDirForCar (go, line);
-
+            go.transform.position = pos;
+            
 		} else {
 
-			go.transform.position = roadLineInfo [line].lastCar.transform.position - Random.Range (roadLineInfo [line].distance.x, roadLineInfo [line].distance.y) * Vector3.left;
-			ChooseDirForCar (go, line);
+			//go.transform.position = roadLineInfo [line].GetLastCar().transform.position - Random.Range (roadLineInfo [line].distance.x, roadLineInfo [line].distance.y) * Vector3.left;
 		}
 
-		go.CarSpeed = roadLineInfo [line].carSpeed;
+        go.SetDirection(roadLineInfo[line].dir);
+        
 		roadLineInfo [line].carsInLine.Add (go);
-		roadLineInfo [line].lastCar = go.transform;
 
 /*
 		for (int i = 0; i < roadLineInfo.Length; i++) {
@@ -129,17 +210,6 @@ public class MobCarsController : SingletonGeneric<MobCarsController> {
 			}
 		}*/
 
-	}
-
-	void ChooseDirForCar (MobCar go, int line)
-	{
-		if (roadLineInfo [line].dir == MoveDir.back) {
-			go.transform.eulerAngles = Vector3.up * 180;
-			go.moveDir = MoveDir.back;
-		} else {
-			go.transform.eulerAngles = Vector3.zero;
-			go.moveDir = MoveDir.forward;
-		}
 	}
 
 	List<MobCar> reuseCarsList = new List<MobCar> ();
@@ -174,13 +244,18 @@ public class MobCarsController : SingletonGeneric<MobCarsController> {
 	{
 		int index = Random.Range (0, reuseCarsList.Count);
 
-		MobCar car = reuseCarsList [index];
+        if (reuseCarsList.Count > 0)
+        {
+            MobCar car = reuseCarsList[index];
 
-		reuseCarsList.RemoveAt (index);
+            reuseCarsList.RemoveAt(index);
 
-		car.gameObject.SetActive (true);
+            car.gameObject.SetActive(true);
 
-		return car;
+            return car;
+        }
+        else
+            return null;
 	}
 
 
@@ -188,13 +263,16 @@ public class MobCarsController : SingletonGeneric<MobCarsController> {
 
 [System.Serializable]
 public class RoadLineInfo {
-
-	public int mobCount;
 	public MoveDir dir;
 	public float roadCenterPos;
-	public Vector2 distance;
 	public List<MobCar> carsInLine;
-	public float carSpeed = 19;
-	[HideInInspector]public Transform lastCar;
+
+    public MobCar GetLastCar()
+    {
+        if(carsInLine.Count > 0)
+            return carsInLine[0];
+        else
+            return null;
+    }
 
 }

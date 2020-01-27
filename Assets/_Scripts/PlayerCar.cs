@@ -56,9 +56,12 @@ public class PlayerCar : KMonoBehaviour {
 	public Vector3[] wheelsPos;
 
 	public Vector3[] nitroPos;
-
-
+    
 	Rigidbody rb;
+    public Rigidbody GetRigidbody()
+    {
+        return rb;
+    }
 	BoxCollider boxCol;
 
 	Material[] materials;
@@ -201,6 +204,7 @@ public class PlayerCar : KMonoBehaviour {
 		}
 
 		Move ();
+        CameraController.Instance.UpdateCameraPos();
 	}
 
 
@@ -230,15 +234,22 @@ public class PlayerCar : KMonoBehaviour {
 
 	void UpdateCarStats ()
 	{
+        int max_maxSpeed = 330;
+        int max_acceleration = 25;
+        int max_handling = 15;
+        int max_breaking = 150;
+        int max_nitroAcceleration = 15;
+        int max_nitroTime = 15;
+        int max_deadSpeed = 150;
 
-		maxSpeed += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlMaxSpeed * ShopController.upgradePercent * maxSpeed;
-		acceleration += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlAcceleration * ShopController.upgradePercent * acceleration;
-		handling += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlHandling * ShopController.upgradePercent * handling;
-		breaking += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlBreaking * ShopController.upgradePercent * breaking;
-		nitroAcceleration += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlNitro * ShopController.upgradePercent * nitroAcceleration;
-		nitroTime += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlNitro * ShopController.upgradePercent * nitroTime;
-		deadSpeed += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlDurability * ShopController.upgradePercent * deadSpeed;
 
+        maxSpeed += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlMaxSpeed * ShopController.upgradePercent * max_maxSpeed;
+		acceleration += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlAcceleration * ShopController.upgradePercent * max_acceleration;
+		handling += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlHandling * ShopController.upgradePercent * max_handling;
+		breaking += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlBreaking * ShopController.upgradePercent * max_breaking;
+		nitroAcceleration += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlNitro * ShopController.upgradePercent * max_nitroAcceleration;
+		nitroTime += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlNitro * ShopController.upgradePercent * max_nitroTime;
+		deadSpeed += Database.PlayerData.playerStats [Database.PlayerData.curCarIndex].boostLvlDurability * ShopController.upgradePercent * max_deadSpeed;
 	}
 
 
@@ -500,6 +511,7 @@ public class PlayerCar : KMonoBehaviour {
 
 	void OnCollisionEnter (Collision col)
 	{
+        print(col.collider.name);
 		if (col.transform.CompareTag ("Mob") && !isDead) {
 
 			if (MobCarsController.Instance.roadLineInfo [0].dir == MoveDir.back && transform.position.z > -.1f) {
